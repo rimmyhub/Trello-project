@@ -31,7 +31,7 @@ npx sequelize db:create
 #데이터베이스 삭제
 npx sequelize db:drop  
 
-# migrations 폴더에 정의된 migration 파일들과 MySQL의 테이블을 맵핑시킵니다.
+#데이터베이스 맵핑
 npx sequelize db:migrate
 
 
