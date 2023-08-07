@@ -9,6 +9,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasMany(models.Board, {
+        sourceKey: 'userId',
+        foreignKey: 'userId',
+      });
+      this.hasMany(models.BoardShare, {
+        sourceKey: 'userId',
+        foreignKey: 'userId',
+      });
+      this.hasMany(models.Comment, {
+        sourceKey: 'userId',
+        foreignKey: 'userId',
+      });
     }
   }
   User.init(

@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.Board, {
+        sourceKey: 'boardId',
+        foreignKey: 'boardId',
+      });
+      this.hasMany(models.Card, {
+        sourceKey: 'columnId',
+        foreignKey: 'columnId',
+      });
     }
   }
   Column.init(
@@ -20,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       boardId: {
+        allowNull: false,
         type: DataTypes.INTEGER,
         references: {
           model: 'Board',
@@ -27,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       name: {
+        allowNull: false,
         type: DataTypes.STRING,
       },
       createdAt: {
