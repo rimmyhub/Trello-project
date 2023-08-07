@@ -9,17 +9,34 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.BoardShare, {
+        sourceKey: 'boardShareId',
+        foreignKey: 'boardShareId',
+      });
+      this.belongsTo(models.Card, {
+        sourceKey: 'cardId',
+        foreignKey: 'cardId',
+      });
     }
   }
   CardShare.init(
     {
-      boardShareId: {
+      cardShareId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
+      boardShareId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'BoardShare',
+          key: 'boardShareId',
+        },
+      },
       cardId: {
+        allowNull: false,
         type: DataTypes.INTEGER,
         references: {
           model: 'Card',

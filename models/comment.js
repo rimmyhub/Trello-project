@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.User, {
+        sourceKey: 'userId',
+        foreignKey: 'userId',
+      });
+      this.belongsTo(models.Card, {
+        sourceKey: 'cardId',
+        foreignKey: 'cardId',
+      });
     }
   }
   Comment.init(
