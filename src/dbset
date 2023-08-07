@@ -1,0 +1,20 @@
+# 사용자 User
+npx sequelize model:generate --name User --attributes email:string,password:string,name:string,introduction:string,userImage:string
+
+# 보드 Board
+npx sequelize model:generate --name Board --attributes userId:integer,name:string,color:string,description:string
+
+# 보드 공유 BoardShare
+npx sequelize model:generate --name BoardShare --attributes userId:integer,boardId:integer
+
+# 칼럼 Column
+npx sequelize model:generate --name Column --attributes boardId:integer,name:string
+
+# 카드 Card
+npx sequelize model:generate --name Card --attributes columnId:integer,name:string,description:string,color:string,dueDate:date
+
+# 카드 공유 CardShare
+npx sequelize model:generate --name CardShare --attributes boardShareId:integer,cardId:integer
+
+# 댓글 Comment
+npx sequelize model:generate --name Comment --attributes userId:integer,cardId:integer,comment:string
