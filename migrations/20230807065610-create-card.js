@@ -10,6 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       columnId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'Columns',
@@ -17,16 +18,29 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
+      userId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'userId',
+        },
+        onDelete: 'CASCADE',
+      },
       name: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       description: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       color: {
+        allowNull: false,
         type: Sequelize.ENUM('red', 'blue', 'yellow', 'green'),
       },
       dueDate: {
+        allowNull: false,
         type: Sequelize.DATE,
       },
       createdAt: {
