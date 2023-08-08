@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: 'cardId',
         foreignKey: 'cardId',
       });
+      this.belongsTo(models.User, {
+        sourceKey: 'userId',
+        foreignKey: 'userId',
+      });
     }
   }
   Card.init(
@@ -37,6 +41,14 @@ module.exports = (sequelize, DataTypes) => {
         references: {
           model: 'Column',
           key: 'columnId',
+        },
+      },
+      userId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'User',
+          key: 'userId',
         },
       },
       name: {
@@ -69,7 +81,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Card',
-    }
+    },
   );
   return Card;
 };
