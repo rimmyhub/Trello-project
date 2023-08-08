@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: 'columnId',
         foreignKey: 'columnId',
       });
+      this.belongsTo(models.User, {
+        sourceKey: 'userId',
+        foreignKey: 'userId',
+      });
     }
   }
   Column.init(
@@ -33,6 +37,14 @@ module.exports = (sequelize, DataTypes) => {
         references: {
           model: 'Board',
           key: 'boardId',
+        },
+      },
+      userId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'User',
+          key: 'userId',
         },
       },
       name: {
@@ -53,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Column',
-    }
+    },
   );
   return Column;
 };
