@@ -10,6 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       boardId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'Boards',
