@@ -10,6 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       boardShareId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'BoardShares',
@@ -18,6 +19,7 @@ module.exports = {
         onDelete: 'CASCADE',
       },
       cardId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'Cards',
