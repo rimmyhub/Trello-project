@@ -1,32 +1,32 @@
 const { Column } = require('../models');
 
 class ColumnRepository {
-    createColumn = async (columnData) => {
+    async createColumn(columnData) {
         const createdColumn = await Column.create(columnData);
         return createdColumn;
-    };
+    }
 
-    getColumnById = async (columnId) => {
+    async getColumnById(columnId) {
         const column = await Column.findByPk(columnId);
         return column;
-    };
+    }
 
-    getAllColumns = async () => {
+    async getAllColumns() {
         const columns = await Column.findAll();
         return columns;
-    };
+    }
 
-    updateColumn = async (columnId, updatedData) => {
+    async updateColumn(columnId, updatedData, userId) {
         const updatedColumn = await Column.update(updatedData, {
-            where: { columnId },
+            where: { id: columnId, userId }
         });
         return updatedColumn;
-    };
+    }
 
-    deleteColumn = async (columnId) => {
-        const deletedColumn = await Column.destroy({ where: { columnId } });
+    async deleteColumn(columnId, userId) {
+        const deletedColumn = await Column.destroy({ where: { id: columnId, userId } });
         return deletedColumn;
-    };
+    }
 }
 
 module.exports = ColumnRepository;

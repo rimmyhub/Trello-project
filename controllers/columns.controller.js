@@ -1,10 +1,18 @@
 const ColumnService = require('../services/columns.service');
+const AuthMiddleware = require('../middleware/auth.middleware.js');
 
 class ColumnsController {
-    columnService = new ColumnService();
+    constructor() {
+        this.columnService = new ColumnService();
+        this.authMiddleware = new AuthMiddleware();
+    }
 
     createColumn = async (req, res) => {
-        const columnData = req.body;
+        const columnData = {
+            ...req.body,
+            userId: res.locals.user.userId
+        };
+
         try {
             const createdColumn = await this.columnService.createColumn(columnData);
             res.status(201).json(createdColumn);
@@ -40,9 +48,15 @@ class ColumnsController {
     updateColumn = async (req, res) => {
         const { columnId } = req.params;
         const updatedData = req.body;
+        const userId = res.locals.user.userId;
+
         try {
-            const updatedColumn = await this.columnService.updateColumn(columnId, updatedData);
-            res.status(200).json(updatedColumn);
+            const updatedColumn = await this.columnService.updateColumn(columnId, updatedData, userId);
+            if (updatedColumn) {
+                res.status(200).json(updatedColumn);
+            } else {
+                res.status(404).json({ message: '컬럼이 존재하지 않습니다.' });
+            }
         } catch (error) {
             res.status(500).json({ error: '컬럼 수정 실패' });
         }
@@ -50,13 +64,19 @@ class ColumnsController {
 
     deleteColumn = async (req, res) => {
         const { columnId } = req.params;
+        const userId = res.locals.user.userId;
+
         try {
-            await this.columnService.deleteColumn(columnId);
-            res.status(204).send();
+            const deletedColumn = await this.columnService.deleteColumn(columnId, userId);
+            if (deletedColumn) {
+                res.status(204).send();
+            } else {
+                res.status(404).json({ message: '컬럼이 존재하지 않습니다.' });
+            }
         } catch (error) {
             res.status(500).json({ error: '컬럼 삭제 실패' });
         }
     };
 }
 
-module.exports = ColumnsController
+module.exports = ColumnsController;
