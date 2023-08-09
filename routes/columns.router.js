@@ -2,12 +2,15 @@ const express = require('express');
 const ColumnsController = require('../controllers/columns.controller.js');
 const columnsController = new ColumnsController();
 
-const ColumnsRouter = express.Router();
+const AuthMiddleware = require('../middleware/auth.middleware.js');
 
-ColumnsRouter.post('/', columnsController.createColumn);
-ColumnsRouter.get('/:columnId', columnsController.getColumnById);
-ColumnsRouter.get('/', columnsController.getAllColumns);
-ColumnsRouter.put('/:columnId', columnsController.updateColumn);
-ColumnsRouter.delete('/:columnId', columnsController.deleteColumn);
+const columnsRouter = express.Router();
+const authMiddleware = new AuthMiddleware();
 
-module.exports = ColumnsRouter;
+columnsRouter.post('/', authMiddleware.verifyAccessToken, columnsController.createColumn);
+columnsRouter.get('/:columnId', authMiddleware.verifyAccessToken, columnsController.getColumnById);
+columnsRouter.get('/', authMiddleware.verifyAccessToken, columnsController.getAllColumns);
+columnsRouter.put('/:columnId', authMiddleware.verifyAccessToken, columnsController.updateColumn);
+columnsRouter.delete('/:columnId', authMiddleware.verifyAccessToken, columnsController.deleteColumn);
+
+module.exports = columnsRouter;
