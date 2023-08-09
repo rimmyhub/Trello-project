@@ -17,13 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: 'columnId',
         foreignKey: 'columnId',
       });
-<<<<<<< HEAD
-=======
       this.belongsTo(models.User, {
         sourceKey: 'userId',
         foreignKey: 'userId',
       });
->>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
     }
   }
   Column.init(
@@ -42,8 +39,6 @@ module.exports = (sequelize, DataTypes) => {
           key: 'boardId',
         },
       },
-<<<<<<< HEAD
-=======
       userId: {
         allowNull: false,
         type: DataTypes.INTEGER,
@@ -52,7 +47,6 @@ module.exports = (sequelize, DataTypes) => {
           key: 'userId',
         },
       },
->>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
       name: {
         allowNull: false,
         type: DataTypes.STRING,
@@ -71,11 +65,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Column',
-<<<<<<< HEAD
-    }
-=======
     },
->>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
   );
   return Column;
 };

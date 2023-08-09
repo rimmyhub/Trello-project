@@ -21,8 +21,6 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: 'userId',
         foreignKey: 'userId',
       });
-<<<<<<< HEAD
-=======
 
       this.hasMany(models.RefreshToken, {
         sourceKey: 'userId',
@@ -36,7 +34,6 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: 'userId',
         foreignKey: 'userId',
       });
->>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
     }
   }
   User.init(
@@ -81,11 +78,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'User',
-<<<<<<< HEAD
-    }
-=======
     },
->>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
   );
   return User;
 };
