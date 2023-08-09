@@ -63,20 +63,20 @@ class BoardsService {
     }
   };
 
-  inviteBoard = async ({ email, boardId }) => {
-    const invitedUser = await this.boardsRepository.findByEmail({ email });
+  // inviteBoard = async ({ email, boardId }) => {
+  //   const invitedUser = await this.boardsRepository.findByEmail({ email });
 
-    if (!invitedUser) {
-      throw { code: 400, message: '초대할 유저가 존재하지 않습니다.' };
-    }
-    if (!boardId) {
-      throw { code: 400, message: '보드가 존재하지 않습니다.' };
-    }
+  //   if (!invitedUser) {
+  //     throw { code: 400, message: '초대할 유저가 존재하지 않습니다.' };
+  //   }
+  //   if (!boardId) {
+  //     throw { code: 400, message: '보드가 존재하지 않습니다.' };
+  //   }
 
-    const inviteData = await this.boardsRepository.createBoardUser(invitedUser.userId, boardId);
+  //   const inviteData = await this.boardsRepository.createBoardUser(invitedUser.userId, boardId);
 
-    return inviteData;
-  };
+  //   return inviteData;
+  // };
 }
 
 module.exports = BoardsService;
