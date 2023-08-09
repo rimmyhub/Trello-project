@@ -31,13 +31,13 @@ class BoardsRepository {
     });
   };
 
-  // 보드 초대
-  findByEmail = async (email) => {
-    return await User.findOne({ where: { email } });
-  };
+  // // 보드 초대
+  // findByEmail = async (email) => {
+  //   return await User.findOne({ where: { email } });
+  // };
 
-  createBoardShare = async (userId, boardId) => {
-    return await BoardShare.create({ userId, boardId });
-  };
+  // createBoardShare = async (userId, boardId) => {
+  //   return await BoardShare.create({ userId, boardId });
+  // };
 }
 module.exports = BoardsRepository;

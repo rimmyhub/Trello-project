@@ -16,9 +16,4 @@ boardRouter.put('/boards/:boardId', auth.verifyAccessToken, boardsController.upd
 // 보드 삭제
 boardRouter.delete('/boards/:boardId', auth.verifyAccessToken, boardsController.deleteBoard);
 
-// 보드 초대
-boardRouter.post('/boards/:boardId/invite', auth.verifyAccessToken, boardsController.inviteBoard);
-
-//
-
 module.exports = boardRouter;

@@ -72,19 +72,19 @@ class BoardsController {
     }
   };
 
-  // 보드 초대
-  inviteBoard = async (req, res, next) => {
-    try {
-      const { email } = req.body;
-      const { boardId } = req.params;
-      const { code, message } = await this.boardsService.inviteBoard({
-        email,
-        boardId,
-      });
-      return res.status(code).json({ message });
-    } catch (error) {
-      return this.handleError(res, error);
-    }
-  };
+  // // 보드 초대
+  // inviteBoard = async (req, res, next) => {
+  //   try {
+  //     const { email } = req.body;
+  //     const { boardId } = req.params;
+  //     const { code, message } = await this.boardsService.inviteBoard({
+  //       email,
+  //       boardId,
+  //     });
+  //     return res.status(code).json({ message });
+  //   } catch (error) {
+  //     return this.handleError(res, error);
+  //   }
+  // };
 }
 module.exports = BoardsController;
