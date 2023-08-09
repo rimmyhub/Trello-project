@@ -47,6 +47,11 @@ module.exports = (sequelize, DataTypes) => {
           key: 'boardId',
         },
       },
+      status: {
+        allowNull: false,
+        type: DataTypes.ENUM('standby', 'accept', 'cancel'),
+        defaultValue: 'standby',
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
@@ -61,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'BoardShare',
-    }
+    },
   );
   return BoardShare;
 };

@@ -15,8 +15,8 @@ class BoardsController {
   // 보드 생성
   createBoard = async (req, res) => {
     try {
-      const { name, description } = req.body;
-      // const {userId} = res.locals.user;
+      const { name, description, color } = req.body;
+      const { userId } = res.locals.user;
       const { code, message } = await this.boardsService.createBoard({
         userId,
         name,
@@ -32,7 +32,7 @@ class BoardsController {
   // 보드 수정
   updateBoard = async (req, res) => {
     try {
-      const { name, description } = req.body;
+      const { name, description, color } = req.body;
       const { boardId } = req.params;
       const { userId } = res.locals.user;
       const { code, message } = await this.boardsService.updateBoard({
@@ -56,6 +56,21 @@ class BoardsController {
       const { code, message } = await this.boardsService.deleteBoard({
         boardId,
         userId,
+      });
+      return res.status(code).json({ message });
+    } catch (error) {
+      return this.handleError(res, error);
+    }
+  };
+
+  // 보드 초대
+  inviteBoard = async (req, res) => {
+    try {
+      const { email } = req.body;
+      const { boardId } = req.params;
+      const { code, message } = await this.boardsService.inviteBoard({
+        email,
+        boardId,
       });
       return res.status(code).json({ message });
     } catch (error) {

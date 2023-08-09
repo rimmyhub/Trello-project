@@ -27,6 +27,11 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
+      status: {
+        allowNull: false,
+        type: Sequelize.ENUM('standby', 'accept', 'cancel'),
+        defaultValue: 'standby',
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
