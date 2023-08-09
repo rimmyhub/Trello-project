@@ -10,10 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       columnId: {
-<<<<<<< HEAD
-=======
         allowNull: false,
->>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
         type: Sequelize.INTEGER,
         references: {
           model: 'Columns',
@@ -21,18 +18,6 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
-<<<<<<< HEAD
-      name: {
-        type: Sequelize.STRING,
-      },
-      description: {
-        type: Sequelize.STRING,
-      },
-      color: {
-        type: Sequelize.ENUM('red', 'blue', 'yellow', 'green'),
-      },
-      dueDate: {
-=======
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -60,7 +45,6 @@ module.exports = {
       },
       dueDate: {
         allowNull: false,
->>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
         type: Sequelize.DATE,
       },
       createdAt: {

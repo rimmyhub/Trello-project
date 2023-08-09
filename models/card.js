@@ -21,13 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: 'cardId',
         foreignKey: 'cardId',
       });
-<<<<<<< HEAD
-=======
       this.belongsTo(models.User, {
         sourceKey: 'userId',
         foreignKey: 'userId',
       });
->>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
     }
   }
   Card.init(
@@ -46,8 +43,6 @@ module.exports = (sequelize, DataTypes) => {
           key: 'columnId',
         },
       },
-<<<<<<< HEAD
-=======
       userId: {
         allowNull: false,
         type: DataTypes.INTEGER,
@@ -56,7 +51,6 @@ module.exports = (sequelize, DataTypes) => {
           key: 'userId',
         },
       },
->>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
       name: {
         allowNull: false,
         type: DataTypes.STRING,
@@ -69,13 +63,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.ENUM('red', 'blue', 'yellow', 'green'),
       },
-<<<<<<< HEAD
-=======
       startDate: {
         allowNull: false,
         type: DataTypes.DATE,
       },
->>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
       dueDate: {
         allowNull: false,
         type: DataTypes.DATE,
@@ -94,11 +85,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Card',
-<<<<<<< HEAD
-    }
-=======
     },
->>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
   );
   return Card;
 };
