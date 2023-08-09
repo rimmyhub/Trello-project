@@ -47,6 +47,14 @@ module.exports = (sequelize, DataTypes) => {
           key: 'boardId',
         },
       },
+<<<<<<< HEAD
+=======
+      status: {
+        allowNull: false,
+        type: DataTypes.ENUM('standby', 'accept', 'cancel'),
+        defaultValue: 'standby',
+      },
+>>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
@@ -61,7 +69,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'BoardShare',
+<<<<<<< HEAD
     }
+=======
+    },
+>>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
   );
   return BoardShare;
 };

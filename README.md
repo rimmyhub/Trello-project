@@ -1,5 +1,6 @@
 # trello-project
 
+<<<<<<< HEAD
 #dotenv 패키지 설치
 npm i dotenv
 
@@ -40,3 +41,11 @@ npm i prettier -D
 
 #스크립트 실행
 npm run prettier 
+=======
+깃허브에 올리기 전 확인해주세요!
+
+.env 삭제
+npm i dotenv
+git rm .env --cached
+
+>>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
