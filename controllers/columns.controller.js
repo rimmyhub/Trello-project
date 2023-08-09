@@ -9,7 +9,7 @@ class ColumnsController {
             const createdColumn = await this.columnService.createColumn(columnData);
             res.status(201).json(createdColumn);
         } catch (error) {
-            res.status(500).json({ error: 'Failed to create column.' });
+            res.status(500).json({ error: '컬럼 생성 실패' });
         }
     };
 
@@ -20,10 +20,10 @@ class ColumnsController {
             if (column) {
                 res.status(200).json(column);
             } else {
-                res.status(404).json({ message: 'Column not found.' });
+                res.status(404).json({ message: '컬럼이 존재하지 않습니다.' });
             }
         } catch (error) {
-            res.status(500).json({ error: 'Failed to retrieve column.' });
+            res.status(500).json({ error: '컬럼 조회 실패' });
         }
     };
 
@@ -33,7 +33,7 @@ class ColumnsController {
             res.status(200).json(columns);
         } catch (error) {
             console.error('Error retrieving columns:', error);
-            res.status(500).json({ error: 'Failed to retrieve columns.' });
+            res.status(500).json({ error: '컬럼 조회 실패' });
         }
     };
 
@@ -44,7 +44,7 @@ class ColumnsController {
             const updatedColumn = await this.columnService.updateColumn(columnId, updatedData);
             res.status(200).json(updatedColumn);
         } catch (error) {
-            res.status(500).json({ error: 'Failed to update column.' });
+            res.status(500).json({ error: '컬럼 수정 실패' });
         }
     };
 
@@ -54,7 +54,7 @@ class ColumnsController {
             await this.columnService.deleteColumn(columnId);
             res.status(204).send();
         } catch (error) {
-            res.status(500).json({ error: 'Failed to delete column.' });
+            res.status(500).json({ error: '컬럼 삭제 실패' });
         }
     };
 }
