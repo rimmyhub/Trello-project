@@ -1,11 +1,13 @@
 const BoardsRepository = require('../repositories/boards.repository');
-const color = require('../models/board');
+// const color = require('../models/board');
+// boardShare model에 userId가 있으니 user model은 필요 없는게 맞나?
+const { Board, BoardShare } = require('../models');
 
 class BoardsService {
   boardsRepository = new BoardsRepository();
 
   // 보드 생성
-  createBoard = async ({ name, color, description }) => {
+  createBoard = async (userId, name, color, description) => {
     try {
       await this.boardsRepository.createOne({
         userId,
@@ -20,7 +22,11 @@ class BoardsService {
   };
 
   // 보드 수정
-  updateBoard = async (name, color, description) => {
+  updateBoard = async (userId, boardId, name, color, description) => {
+    const targetBoard = await this.boardsRepository.findBoardById(boardId);
+
+    if (!targetBoard) throw { code: 400, message: '보드가 존재하지 않습니다.' };
+
     try {
       await this.boardsRepository.putOne({
         userId,
@@ -29,6 +35,7 @@ class BoardsService {
         color,
         description,
       });
+
       return { code: 200, message: '보드 수정이 완료되었습니다.' };
     } catch (error) {
       throw { code: 400, message: '데이터 형식이 올바르지 않습니다.' };
@@ -53,6 +60,21 @@ class BoardsService {
     } catch (error) {
       throw { code: 400, message: '데이터 형식이 올바르지 않습니다.' };
     }
+  };
+
+  inviteBoard = async (email, boardId) => {
+    const invitedUser = await this.boardsRepository.findByEmail(email);
+
+    if (!invitedUser) {
+      throw { code: 400, message: '초대할 유저가 존재하지 않습니다.' };
+    }
+    if (!boardId) {
+      throw { code: 400, message: '보드가 존재하지 않습니다.' };
+    }
+
+    const inviteData = await this.boardsRepository.createBoardUser(invitedUser.userId, boardId);
+
+    return inviteData;
   };
 }
 
