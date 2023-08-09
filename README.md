@@ -4,5 +4,5 @@
 
 .env 삭제
 npm i dotenv
-git rm .env --cached
 
+git rm .env --cached
