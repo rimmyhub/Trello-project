@@ -18,6 +18,9 @@ npx sequelize model:generate --name CardShare --attributes boardShareId:integer,
 
 # 댓글 Comment
 npx sequelize model:generate --name Comment --attributes userId:integer,cardId:integer,comment:string
+<<<<<<< HEAD
+=======
 
 # 리프레쉬 토큰
 npx sequelize model:generate --name RefreshToken --attributes refreshToken:string,userId:string
+>>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a

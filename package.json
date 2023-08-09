@@ -2,16 +2,25 @@
   "name": "trello-project",
   "version": "1.0.0",
   "description": "",
+<<<<<<< HEAD
+  "main": ".prettierrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+=======
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
     "dev": "nodemon app.js"
+>>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
+    "dotenv": "^16.3.1"
+=======
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.3.1",
@@ -23,5 +32,6 @@
   "devDependencies": {
     "prettier": "^3.0.1",
     "sequelize-cli": "^6.6.1"
+>>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
   }
 }
