@@ -1,6 +1,5 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
-
 const userRouter = require('./routes/users.router');
 const boardRouter = require('./routes/boards.router');
 const viewRouter = require('./views/router/index');
@@ -16,7 +15,6 @@ app.use(cookieParser());
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('assets'));
-
 
 app.set('view engine', 'ejs');
 app.set('view', __dirname + '/views');
