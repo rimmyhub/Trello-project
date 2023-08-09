@@ -13,7 +13,7 @@ class BoardsController {
   }
 
   // 보드 생성
-  createBoard = async (req, res) => {
+  createBoard = async (req, res, next) => {
     try {
       const { name, description, color } = req.body;
       const { userId } = res.locals.user;
@@ -29,18 +29,27 @@ class BoardsController {
     }
   };
 
+  // 아이디 찾기
+  // findBoardById = async (req, res, next) => {
+  //   const { boardId } = req.params;
+
+  //   const { code, message } = await this.boardsService.findBoardById({
+  //     boardId,
+  //   });
+  // };
+
   // 보드 수정
-  updateBoard = async (req, res) => {
+  updateBoard = async (req, res, next) => {
     try {
-      const { name, description, color } = req.body;
+      const { name, color, description } = req.body;
       const { boardId } = req.params;
       const { userId } = res.locals.user;
       const { code, message } = await this.boardsService.updateBoard({
-        boardId,
         userId,
+        boardId,
         name,
-        description,
         color,
+        description,
       });
       return res.status(code).json({ message });
     } catch (error) {
@@ -49,7 +58,7 @@ class BoardsController {
   };
 
   // 보드 삭제
-  deleteBoard = async (req, res) => {
+  deleteBoard = async (req, res, next) => {
     try {
       const { boardId } = req.params;
       const { userId } = res.locals.user;
@@ -64,7 +73,7 @@ class BoardsController {
   };
 
   // 보드 초대
-  inviteBoard = async (req, res) => {
+  inviteBoard = async (req, res, next) => {
     try {
       const { email } = req.body;
       const { boardId } = req.params;
