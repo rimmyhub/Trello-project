@@ -10,6 +10,10 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       boardId: {
+<<<<<<< HEAD
+=======
+        allowNull: false,
+>>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
         type: Sequelize.INTEGER,
         references: {
           model: 'Boards',
@@ -17,6 +21,18 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
+<<<<<<< HEAD
+=======
+      userId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'userId',
+        },
+        onDelete: 'CASCADE',
+      },
+>>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
       name: {
         type: Sequelize.STRING,
       },

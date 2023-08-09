@@ -10,6 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       email: {
+<<<<<<< HEAD
         type: Sequelize.STRING,
       },
       password: {
@@ -22,6 +23,25 @@ module.exports = {
         type: Sequelize.STRING,
       },
       userImage: {
+=======
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      password: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      name: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      introduction: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
+      userImage: {
+        allowNull: true,
+>>>>>>> f747e1ce018222c019e478fc48166ba9ced9fc2a
         type: Sequelize.STRING,
       },
       createdAt: {
