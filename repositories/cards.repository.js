@@ -1,30 +1,30 @@
-const { Cards } = require('../models');
+const { Card } = require('../models');
+console.log(Card);
 
 class CardRepository {
-  findOne = async (cardId) => {
-    return await Cards.findOne({
-      attributes: ['cardId', 'columnId', 'name', 'description', 'startDate', 'dueDate'],
-      where: { cardId: cardId },
+  findOne = async ({ columnId, cardId }) => {
+    return await Card.findOne({
+      where: { columnId, cardId },
     });
   };
 
-  createOne = async (columnId, name, color, description, startDate, dueDate) => {
-    return await Cards.create({ columnId, name, color, description, startDate, dueDate });
+  createOne = async ({ columnId, userId, name, color, description, startDate, dueDate }) => {
+    return await Card.create({ columnId, userId, name, color, description, startDate, dueDate });
   };
 
-  updateOne = async (name, color, description, startDate, dueDate, cardId) => {
-    return await Cards.update(
-      { name, color, description, startDate, dueDate },
-      { where: { cardId } }
+  updateOne = async (columnId, userId, name, color, description, startDate, dueDate, cardId) => {
+    return await Card.update(
+      { columnId, userId, name, color, description, startDate, dueDate },
+      { where: { cardId } },
     );
   };
 
   deleteOne = async (cardId) => {
-    return await Cards.destroy({ where: { cardId } });
+    return await Card.destroy({ where: { cardId } });
   };
 
   updateColumn = async (columnId, cardId) => {
-    return await Cards.update(columnId, { where: { cardId } });
+    return await Card.update(columnId, { where: { cardId } });
   };
 }
 
