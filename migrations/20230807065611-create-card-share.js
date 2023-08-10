@@ -28,7 +28,7 @@ module.exports = {
         onDelete: 'CASCADE',
       },
       invitedUser: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.INTEGER,
       },
       status: {

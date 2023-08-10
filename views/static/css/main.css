@@ -1,0 +1,34 @@
+/* 여기에 추가적인 스타일을 정의합니다. */
+.board-card {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.board-green {
+  background-color: green;
+  color: white;
+}
+
+.board-blue {
+  background-color: blue;
+  color: white;
+}
+
+.board-red {
+  background-color: red;
+  color: white;
+}
+
+.board-buttons {
+  display: flex;
+}
+
+.edit-button,
+.delete-button {
+  margin-left: 5px;
+}
