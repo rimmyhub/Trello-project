@@ -7,6 +7,8 @@ const auth = new AuthMiddleware();
 const BoardsController = require('../controllers/boards.controller');
 const boardsController = new BoardsController();
 
+boardRouter.get('/boards', boardsController.getAllBoard);
+
 // 보드 생성
 boardRouter.post('/boards', auth.verifyAccessToken, boardsController.createBoard);
 

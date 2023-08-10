@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       invitedUser: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.INTEGER,
       },
       status: {
