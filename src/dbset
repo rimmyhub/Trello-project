@@ -11,12 +11,11 @@ npx sequelize model:generate --name Board --attributes userId:integer,name:strin
 npx sequelize model:generate --name BoardShare --attributes userId:integer,boardId:integer
 
 # 칼럼 Column
-
 npx sequelize model:generate --name Column --attributes boardId:integer,name:string
 
 # 카드 Card
 
-npx sequelize model:generate --name Card --attributes columnId:integer,name:string,description:string,color:string,dueDate:date
+npx sequelize model:generate --name Card --attributes userId:integer,columnId:integer,name:string,description:string,color:string,dueDate:date
 
 # 카드 공유 CardShare
 
