@@ -27,6 +27,10 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
+      invitedUser: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
       status: {
         allowNull: false,
         type: Sequelize.ENUM('standby', 'accept', 'cancel'),

@@ -8,9 +8,9 @@ const boardsController = new BoardsController();
 
 router.get('/');
 
-router.get('/login', (req, res) => {
-  const data = await.usersController.logIn(email, password);
-  return res.render('login', { data });
+router.get('/login', async (req, res) => {
+  const { email, password } = req.body;
+  return res.render('login');
 });
 
 module.exports = router;
