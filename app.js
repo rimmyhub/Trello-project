@@ -1,6 +1,5 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
-
 const userRouter = require('./routes/users.router');
 const boardRouter = require('./routes/boards.router');
 const boardShareRouter = require('./routes/board-shares.router');
