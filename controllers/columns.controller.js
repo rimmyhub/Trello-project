@@ -17,6 +17,7 @@ class ColumnsController {
             const createdColumn = await this.columnService.createColumn(columnData);
             res.status(201).json(createdColumn);
         } catch (error) {
+            console.error('Error retrieving columns:', error);
             res.status(500).json({ error: '컬럼 생성 실패' });
         }
     };
@@ -31,6 +32,7 @@ class ColumnsController {
                 res.status(404).json({ message: '컬럼이 존재하지 않습니다.' });
             }
         } catch (error) {
+            console.error('Error retrieving columns:', error);
             res.status(500).json({ error: '컬럼 조회 실패' });
         }
     };
