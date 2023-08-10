@@ -5,7 +5,7 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
   const password = document.getElementById('loginPassword').value;
 
   try {
-    const response = await fetch('/login', {
+    const response = await fetch('/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -14,7 +14,7 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
     });
 
     if (response.ok) {
-      window.location.href = './main.html';
+      window.location.href = '/main';
     } else {
       const loginFailedModal = new bootstrap.Modal(document.getElementById('loginFailedModal'));
       loginFailedModal.show();
