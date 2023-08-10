@@ -7,7 +7,11 @@ const AuthMiddleware = require('../middleware/auth.middleware.js');
 const columnsRouter = express.Router();
 const authMiddleware = new AuthMiddleware();
 
-columnsRouter.post('/column', authMiddleware.verifyAccessToken, columnsController.createColumn);
+columnsRouter.post(
+  '/board/:boardId/column',
+  authMiddleware.verifyAccessToken,
+  columnsController.createColumn,
+);
 columnsRouter.get(
   '/column/:columnId',
   authMiddleware.verifyAccessToken,

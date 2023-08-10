@@ -17,7 +17,7 @@ class ColumnsController {
       const createdColumn = await this.columnService.createColumn(columnData);
       res.status(201).json(createdColumn);
     } catch (error) {
-      console.log();
+      console.log(error);
       res.status(500).json({ error: '컬럼 생성 실패' });
     }
   };
