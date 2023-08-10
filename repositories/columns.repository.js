@@ -27,6 +27,12 @@ class ColumnRepository {
         const deletedColumn = await Column.destroy({ where: { userId: columnId, userId } });
         return deletedColumn;
     }
+    async getAllColumnsForBoard(boardId) {
+        const columns = await Column.findAll({
+            where: { boardId }
+        });
+        return columns;
+    }
 }
 
 module.exports = ColumnRepository;
