@@ -45,9 +45,9 @@ function updateActivityList(boards) {
 // 서버에서 받아온 보드 데이터를 화면에 표시
 async function handleEditClick(boardId) {
   const newData = {
-    name: '트렐로프로젝트 수정',
-    color: 'green',
-    description: '토이 프로젝트 진행 중',
+    name: '프로젝트 이름',
+    color: '보드 색상',
+    description: '프로젝트 설명',
   };
 
   // 모달 내용 업데이트
@@ -91,16 +91,6 @@ async function handleEditClick(boardId) {
   });
 }
 
-// 보드 삭제 버튼이 클릭되었을 때의 동작을 담당
-// 모달 창을 열어서 삭제할 데이터를 표시, 저장 버튼이 클릭되면 삭제한 내용을 서버로 전송하여 보드를 업데이트
-function handleDeleteClick(boardId) {
-  // 삭제 버튼을 눌렀을 때의 동작을 정의합니다.
-  console.log(`Delete button clicked for boardId: ${boardId}`);
-}
-
-// 보드 삭제 버튼이 클릭되었을 때 동작 정의.
-// 현재 그냥 콘솔에 삭제 버튼이 눌린 보드의 id 출력.
-// 서버와 통신하여 해당 보드를 삭제하는 로직 추가해야 함
 function getColorClass(color) {
   // 보드의 색상에 따라 해당하는 css 클래스 이름 반환
   switch (color) {
@@ -115,4 +105,15 @@ function getColorClass(color) {
     default:
       return '';
   }
+}
+
+// 보드 삭제 버튼이 클릭되었을 때 동작 정의.
+// 현재 그냥 콘솔에 삭제 버튼이 눌린 보드의 id 출력.
+// 서버와 통신하여 해당 보드를 삭제하는 로직 추가해야 함
+
+// 보드 삭제 버튼이 클릭되었을 때의 동작을 담당
+// 모달 창을 열어서 삭제할 데이터를 표시, 저장 버튼이 클릭되면 삭제한 내용을 서버로 전송하여 보드를 업데이트
+function handleDeleteClick(boardId) {
+  // 삭제 버튼을 눌렀을 때의 동작을 정의합니다.
+  alert(`Delete button clicked for boardId: ${boardId}`);
 }
