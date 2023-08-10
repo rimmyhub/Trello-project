@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const CardRouter = express.Router();
 
 const AuthMiddleware = require('../middleware/auth.middleware');
 const auth = new AuthMiddleware();
@@ -7,14 +7,27 @@ const auth = new AuthMiddleware();
 const CardsController = require('../controllers/cards.controller');
 const cardsController = new CardsController();
 
-router.get('/:columnId/cards/:cardId', cardsController.getCard);
+// 칼럼 - > 카드 전체 조회
+CardRouter.get('/:columnId/cards', cardsController.getAllCard);
 
-router.post('/cards', auth.verifyAccessToken, cardsController.createCard);
+// 카드 상세 조회
+CardRouter.get('/:columnId/cards/:cardId', cardsController.getCard);
 
-router.put('/:columnId/cards/:cardId', auth.verifyAccessToken, cardsController.updateCard);
+// 카드 생성
+CardRouter.post('/:columnId/cards', auth.verifyAccessToken, cardsController.createCard);
 
-router.delete('/:columnId/cards/:cardId', auth.verifyAccessToken, cardsController.deleteCard);
+// 카드 수정
+CardRouter.put('/:columnId/cards/:cardId', auth.verifyAccessToken, cardsController.updateCard);
 
-router.patch('/:columnId/cards/:cardId', auth.verifyAccessToken, cardsController.column);
+// 카드 삭제
+CardRouter.delete('/:columnId/cards/:cardId', auth.verifyAccessToken, cardsController.deleteCard);
 
-module.exports = router;
+// 칼럼 아이디 수정
+// 팀원들에게 여쭤보기
+CardRouter.patch(
+  '/:columnId/cards/:cardId',
+  auth.verifyAccessToken,
+  cardsController.columnIdModify,
+);
+
+module.exports = CardRouter;
