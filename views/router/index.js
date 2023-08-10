@@ -1,12 +1,11 @@
 const express = require('express');
-const UsersController = require('../../controllers/users.controller');
 const router = express.Router();
 
-const usersController = new UsersController();
+router.get();
 
-router.get('/login', (req, res) => {
-  const data = await.usersController.logIn(email, password);
-  return res.render('login', { data });
+router.get('/login', async (req, res) => {
+  const { email, password } = req.body;
+  return res.render('login');
 });
 
 module.exports = router;

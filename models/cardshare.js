@@ -43,6 +43,10 @@ module.exports = (sequelize, DataTypes) => {
           key: 'cardId',
         },
       },
+      invitedUser: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
       status: {
         allowNull: false,
         type: DataTypes.ENUM('standby', 'accept', 'cancel'),
