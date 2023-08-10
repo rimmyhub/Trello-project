@@ -6,6 +6,15 @@ const { Board, BoardShare } = require('../models');
 class BoardsService {
   boardsRepository = new BoardsRepository();
 
+  findAllBoard = async () => {
+    try {
+      const data = await this.boardsRepository.findAllBoard();
+      return { code: 200, message: data };
+    } catch (err) {
+      throw { code: 500, message: '예기치 못한 에러가 발생했습니다.' };
+    }
+  };
+
   // 보드 생성
   createBoard = async ({ userId, name, color, description }) => {
     try {
