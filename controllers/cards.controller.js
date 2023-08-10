@@ -19,9 +19,9 @@ class CardController {
     try {
       const { columnId, name, color, description, startDate, dueDate } = req.body;
       const { userId } = res.locals.user;
-      if (!['red', 'blue', 'green', 'yellow'].includes(type)) {
-        return res.status(400).json({ message: '알맞은 타입을 지정해주세요' });
-      }
+      // if (!['red', 'blue', 'green', 'yellow'].includes(type)) {
+      //   return res.status(400).json({ message: '알맞은 타입을 지정해주세요.' });
+      // }
       const { code, message } = await this.cardService.createCard({
         columnId,
         userId,
