@@ -8,20 +8,22 @@ class ColumnsController {
   }
 
   createColumn = async (req, res) => {
+    const { boardId } = req.params;
     const columnData = {
       ...req.body,
       userId: res.locals.user.userId,
+      boardId: boardId
     };
 
     try {
       const createdColumn = await this.columnService.createColumn(columnData);
       res.status(201).json(createdColumn);
     } catch (error) {
-      console.log();
       res.status(500).json({ error: '컬럼 생성 실패' });
     }
   };
 
+<<<<<<< HEAD
   getColumnById = async (req, res) => {
     const { columnId } = req.params;
     try {
@@ -46,10 +48,27 @@ class ColumnsController {
     }
   };
 
+<<<<<<< HEAD
   updateColumn = async (req, res) => {
     const { columnId } = req.params;
     const updatedData = req.body;
     const userId = res.locals.user.userId;
+=======
+    getColumnById = async (req, res) => {
+        const { columnId } = req.params;
+        try {
+            const column = await this.columnService.getColumnById(columnId);
+            if (column) {
+                res.status(200).json(column);
+            } else {
+                res.status(404).json({ message: '컬럼이 존재하지 않습니다.' });
+            }
+        } catch (error) {
+            console.error('Error retrieving columns:', error);
+            res.status(500).json({ error: '컬럼 조회 실패' });
+        }
+    };
+>>>>>>> column
 
     try {
       const updatedColumn = await this.columnService.updateColumn(columnId, updatedData, userId);
