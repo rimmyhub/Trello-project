@@ -24,6 +24,12 @@
   color: white;
 }
 
+.board-yellow {
+  /* 그냥 yellow 색상은 글자가 보이지 않아 어둡게 했습니다*/
+  background-color: rgba(173, 178, 25, 0.993);
+  color: white;
+}
+
 .board-buttons {
   display: flex;
 }
