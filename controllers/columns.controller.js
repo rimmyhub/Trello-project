@@ -92,6 +92,20 @@ class ColumnsController {
       res.status(500).json({ error: '보드에 속한 컬럼 조회 실패' });
     }
   };
+  // 컬럼 순서 업데이트
+  updateColumnOrder = async (req, res) => {
+    const { boardId } = req.params;
+    const { columnOrder } = req.body;
+
+    try {
+      await this.columnService.updateColumnOrder(boardId, columnOrder);
+      res.status(200).json({ message: '컬럼 순서 업데이트 성공' });
+    } catch (error) {
+      console.error('Error updating column order:', error);
+      res.status(500).json({ error: '컬럼 순서 업데이트 실패' });
+    }
+  };
 }
+
 
 module.exports = ColumnsController;

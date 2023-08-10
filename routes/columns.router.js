@@ -13,5 +13,6 @@ columnsRouter.get('/column', authMiddleware.verifyAccessToken, columnsController
 columnsRouter.put('/:boardId/column/:columnId', authMiddleware.verifyAccessToken, columnsController.updateColumn);
 columnsRouter.delete('/:boardId/column/:columnId', authMiddleware.verifyAccessToken, columnsController.deleteColumn);
 columnsRouter.get('/:boardId/column', authMiddleware.verifyAccessToken, columnsController.getAllColumnsForBoard);
+columnsRouter.put('/:boardId/column-order', authMiddleware.verifyAccessToken, columnsController.updateColumnOrder);
 
 module.exports = columnsRouter;
