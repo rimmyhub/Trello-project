@@ -18,13 +18,13 @@ class ColumnRepository {
 
     async updateColumn(columnId, updatedData, userId) {
         const updatedColumn = await Column.update(updatedData, {
-            where: { id: columnId, userId }
+            where: { userId: columnId, userId }
         });
         return updatedColumn;
     }
 
     async deleteColumn(columnId, userId) {
-        const deletedColumn = await Column.destroy({ where: { id: columnId, userId } });
+        const deletedColumn = await Column.destroy({ where: { userId: columnId, userId } });
         return deletedColumn;
     }
 }

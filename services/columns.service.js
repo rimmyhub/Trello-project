@@ -21,8 +21,8 @@ class ColumnService {
         return this.columnRepository.getAllColumns();
     }
 
-    async getColumnById(id) {
-        return this.columnRepository.getColumnById(id);
+    async getColumnById(columnId) {
+        return this.columnRepository.getColumnById(columnId);
     }
 }
 
