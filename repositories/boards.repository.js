@@ -2,6 +2,10 @@ const { Board, User } = require('../models');
 const { Op, Sequelize } = require('sequelize');
 const BoardShare = require('../models');
 class BoardsRepository {
+  findAllBoard = async () => {
+    return await Board.findAll();
+  };
+
   createBoard = async ({ userId, name, color, description }) => {
     return await Board.create({
       userId,
