@@ -24,6 +24,12 @@ class ColumnService {
     async getColumnById(columnId) {
         return this.columnRepository.getColumnById(columnId);
     }
+
+    async getAllColumnsForBoard(boardId) {
+        return this.columnRepository.getAllColumnsForBoard(boardId);
+    }
 }
+
+
 
 module.exports = ColumnService;
