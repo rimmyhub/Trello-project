@@ -23,9 +23,9 @@ class CardService {
   };
 
   createCard = async ({ userId, name, color, description, startDate, dueDate }) => {
-    if (!['red', 'blue', 'yellow', 'green'].includes(type)) {
-      throw res.status(400).json({ message: '알맞은 타입을 지정해주세요' });
-    }
+    // if (!['red', 'blue', 'yellow', 'green'].includes(type)) {
+    //   throw res.status(400).json({ message: '알맞은 타입을 지정해주세요' });
+    // }
     await this.cardRepository.createOne({
       UserId: userId,
       name,
