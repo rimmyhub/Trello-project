@@ -7,6 +7,7 @@ const columnRouter = require('./routes/columns.router');
 const boardShareRouter = require('./routes/board-shares.router');
 
 const viewRouter = require('./views/router/index');
+const cardRouter = require('./routes/cards.router');
 
 const dotenv = require('dotenv');
 dotenv.config();
