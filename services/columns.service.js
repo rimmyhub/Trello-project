@@ -28,8 +28,14 @@ class ColumnService {
     async getAllColumnsForBoard(boardId) {
         return this.columnRepository.getAllColumnsForBoard(boardId);
     }
+    async updateColumnOrder(boardId, columnOrder) {
+        try {
+            return this.columnRepository.updateColumnOrder(boardId, columnOrder);
+        } catch (error) {
+            throw new Error('컬럼 순서 업데이트 실패');
+        }
+    }
 }
-
 
 
 module.exports = ColumnService;
