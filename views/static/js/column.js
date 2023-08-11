@@ -92,6 +92,65 @@ async function displayColumns() {
     });
   });
 }
+// 컬럼 생성 폼 이벤트 리스너
+const createColumnForm = document.getElementById('create-column-form');
+createColumnForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const columnNameInput = document.getElementById('column-name');
+  const columnName = columnNameInput.value.trim();
+
+  if (columnName) {
+    try {
+      const jwtToken = getJwtToken();
+      const response = await fetch(`/api/${boardId}/column`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${jwtToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: columnName }) // 컬럼 이름 전송
+      });
+
+      if (response.ok) {
+        // 성공적으로 컬럼을 생성한 경우, 화면 갱신
+        columnNameInput.value = ''; // 입력 필드 초기화
+
+        // 생성된 컬럼을 추가한 후, 컬럼을 다시 표시
+        const createdColumn = await response.json();
+        displayColumn(createdColumn);
+      } else {
+        throw new Error('컬럼 생성 실패');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+});
+
+// 컬럼 추가 및 화면 갱신 함수
+async function displayColumn(column) {
+  const columnsContainer = document.getElementById('columns-container');
+  const columnSection = document.createElement('section');
+  columnSection.classList.add('column-section');
+
+  const columnTitleWrapper = document.createElement('div');
+  columnTitleWrapper.classList.add('column-title-wrapper');
+
+  const columnTitle = document.createElement('h2');
+  columnTitle.textContent = column.name;
+  columnTitleWrapper.appendChild(columnTitle);
+
+  const columnElement = document.createElement('div');
+  columnElement.classList.add('column');
+  columnElement.textContent = column.name;
+  columnTitleWrapper.appendChild(columnElement);
+
+  columnSection.appendChild(columnTitleWrapper);
+  columnsContainer.appendChild(columnSection);
+
+  // 컬럼 내부에서의 드래그 앤 드롭 기능 추가
+}
+
 
 // 페이지 로드 시 컬럼 데이터 표시
 document.addEventListener('DOMContentLoaded', displayColumns);
