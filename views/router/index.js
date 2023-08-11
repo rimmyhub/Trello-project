@@ -17,4 +17,8 @@ router.get('/:boardId', async (req, res) => {
   return res.render('column');
 });
 
+router.get('/cards/:cardId', async (req, res) => {
+  return res.render('card');
+});
+
 module.exports = router;
