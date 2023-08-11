@@ -1,30 +1,51 @@
 const { Card } = require('../models');
-console.log(Card);
 
 class CardRepository {
-  findOne = async ({ columnId, cardId }) => {
-    return await Card.findOne({
-      where: { columnId, cardId },
-    });
+  // 카드 전체 조회
+  findAllCard = async (columnId) => {
+    return await Card.findAll({ where: { columnId } });
   };
 
+  // 카드 조회
+  findCard = async (columnId, cardId) => {
+    return await Card.findOne({ where: { columnId, cardId } });
+  };
+
+  // 카드 조회
+  findCardId = async ({ cardId }) => {
+    return await Card.findOne({ where: { cardId } });
+  };
+
+  //카드 생성
   createOne = async ({ columnId, userId, name, color, description, startDate, dueDate }) => {
     return await Card.create({ columnId, userId, name, color, description, startDate, dueDate });
   };
 
-  updateOne = async (columnId, userId, name, color, description, startDate, dueDate, cardId) => {
+  // 카드 수정
+  updateOne = async ({
+    columnId,
+    userId,
+    cardId,
+    name,
+    color,
+    description,
+    startDate,
+    dueDate,
+  }) => {
     return await Card.update(
       { columnId, userId, name, color, description, startDate, dueDate },
-      { where: { cardId } },
+      { where: { cardId, userId } },
     );
   };
 
-  deleteOne = async (cardId) => {
-    return await Card.destroy({ where: { cardId } });
+  // 카드 삭제
+  deleteOne = async ({ columnId, cardId, userId }) => {
+    return await Card.destroy({ where: { columnId, cardId, userId } });
   };
 
-  updateColumn = async (columnId, cardId) => {
-    return await Card.update(columnId, { where: { cardId } });
+  // 카드 수정
+  updateColumn = async ({ columnId, userId, cardId }) => {
+    return await Card.update({ columnId }, { where: { userId, cardId } });
   };
 }
 

@@ -13,4 +13,8 @@ router.get('/signup', async (req, res) => {
   return res.render('signup');
 });
 
+router.get('/:boardId', async (req, res) => {
+  return res.render('column');
+});
+
 module.exports = router;
