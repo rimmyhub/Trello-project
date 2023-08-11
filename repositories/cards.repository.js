@@ -22,18 +22,9 @@ class CardRepository {
   };
 
   // 카드 수정
-  updateOne = async ({
-    columnId,
-    userId,
-    cardId,
-    name,
-    color,
-    description,
-    startDate,
-    dueDate,
-  }) => {
+  updateOne = async ({ userId, cardId, name, color, description, startDate, dueDate }) => {
     return await Card.update(
-      { columnId, userId, name, color, description, startDate, dueDate },
+      { userId, name, color, description, startDate, dueDate },
       { where: { cardId, userId } },
     );
   };

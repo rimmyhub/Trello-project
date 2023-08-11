@@ -30,16 +30,7 @@ class CardService {
   };
 
   // 카드 수정
-  updateCard = async ({
-    columnId,
-    userId,
-    cardId,
-    name,
-    color,
-    description,
-    startDate,
-    dueDate,
-  }) => {
+  updateCard = async ({ userId, cardId, name, color, description, startDate, dueDate }) => {
     const findCard = await this.cardRepository.findCardId({ cardId });
     if (!findCard) throw { code: 400, message: '카드를 찾을 수 없습니다.' };
 
@@ -47,7 +38,6 @@ class CardService {
     if (userId !== findCardUserId) throw { code: 400, message: '카드 작성자가 아닙니다.' };
 
     await this.cardRepository.updateOne({
-      columnId,
       userId,
       cardId,
       name,

@@ -47,7 +47,8 @@ class AuthMiddleware {
   // 엑세스 토큰 확인
   verifyAccessToken = async (req, res, next) => {
     let { accessToken, refreshToken } = req.cookies;
-
+    console.log(accessToken);
+    console.log(refreshToken);
     if (!refreshToken)
       return res.status(400).json({ message: 'Refresh Token이 존재하지 않습니다' });
     if (!accessToken) return res.status(400).json({ message: 'Access Token이 존재하지 않습니다' });
