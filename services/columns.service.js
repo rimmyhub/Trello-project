@@ -1,4 +1,11 @@
 const ColumnRepository = require('../repositories/columns.repository');
+const { validationResult, body } = require('express-validator');
+
+exports.validateUpdateColumnOrder = [
+    validationResult,
+    body('fromposition').isInt(),
+    body('toposition').isInt()
+];
 
 class ColumnService {
     constructor() {
@@ -7,6 +14,14 @@ class ColumnService {
 
     async createColumn(columnData) {
         return this.columnRepository.createColumn(columnData);
+    }
+
+    async getNextColumnPosition(boardId) {
+        try {
+            return this.columnRepository.getNextColumnPosition(boardId);
+        } catch (error) {
+            throw new Error('컬럼 생성 위치 조회 실패');
+        }
     }
 
     async updateColumn(columnId, updatedData, userId) {
@@ -28,6 +43,7 @@ class ColumnService {
     async getAllColumnsForBoard(boardId) {
         return this.columnRepository.getAllColumnsForBoard(boardId);
     }
+
     async updateColumnOrder(boardId, columnOrder) {
         try {
             return this.columnRepository.updateColumnOrder(boardId, columnOrder);
@@ -35,7 +51,8 @@ class ColumnService {
             throw new Error('컬럼 순서 업데이트 실패');
         }
     }
-}
 
+    // 다른 메서드들도 추가로 구현해야 합니다.
+}
 
 module.exports = ColumnService;

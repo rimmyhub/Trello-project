@@ -36,21 +36,22 @@ async function displayColumns() {
   const columns = await fetchColumns();
 
   const sortableOptions = {
-    animation: 150,
-    swapThreshold: 0.5,
+    animation: 150, // 드래그 애니메이션 지속시간 (밀리초),
+    swapThreshold: 0.5, // 컬럼 스왑 임계값 설정
     onEnd: async (event) => {
-      const fromIndex = event.oldIndex;
-      const toIndex = event.newIndex;
+      const fromposition = event.oldIndex;
+      const toposition = event.newIndex;
 
+      // 서버에 컬럼 순서 업데이트 요청
       try {
         const jwtToken = getJwtToken();
         const response = await fetch(`/api/${boardId}/column-order`, {
-          method: 'POST',
+          method: 'PUT',
           headers: {
             'Authorization': `Bearer ${jwtToken}`,
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ fromIndex, toIndex })
+          body: JSON.stringify({ columnOrder: { fromposition, toposition } })
         });
 
         if (!response.ok) {
@@ -61,6 +62,9 @@ async function displayColumns() {
       }
     }
   };
+
+  // 컬럼 구역 전체에 드래그 앤 드롭 기능 추가
+  new Sortable(columnsContainer, sortableOptions);
 
   new Sortable(columnsContainer, sortableOptions);
 
@@ -200,15 +204,21 @@ createColumnForm.addEventListener('submit', async (event) => {
           'Authorization': `Bearer ${jwtToken}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name: columnName })
+        body: JSON.stringify({ name: columnName }) // 컬럼 이름 전송
       });
 
       if (response.ok) {
         columnNameInput.value = '';
 
         const createdColumn = await response.json();
-        displayColumn(createdColumn);
+
+        // 서버에서 생성된 컬럼 객체에 position 정보가 있다고 가정합니다.
+        const position = createdColumn.position;
+
+        // 컬럼을 표시할 때 position 값을 함께 전달합니다.
+        displayColumn(createdColumn, position);
       } else {
+        console.error('Error updating column order:', error);
         throw new Error('컬럼 생성 실패');
       }
     } catch (error) {
