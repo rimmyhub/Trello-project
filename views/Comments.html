@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <title>Task Management</title>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="mb-4 text-center">할일명</h1>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <h3>할일명</h3>
+          <div class="d-flex">
+            <h5 class="me-3">수행기간</h5>
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="taskDuration"
+                placeholder="수행 기간을 입력하세요"
+                required
+              />
+            </div>
+          </div>
+
+          <form id="taskForm">
+            <div class="mb-3">
+              <label for="taskTitle" class="form-label">할 일</label>
+              <input
+                type="text"
+                class="form-control"
+                id="taskTitle"
+                placeholder="할 일을 입력하세요"
+                required
+              />
+            </div>
+            <!-- <div class="mb-3 d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary">할 일 추가</button>
+              <button type="button" class="btn btn-secondary ms-3">초기화</button>
+            </div> -->
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <form>
+            <div
+              class="mb-3 position-relative"
+              style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)"
+            >
+              <textarea
+                class="form-control"
+                id="commentText"
+                rows="3"
+                style="padding-left: 110px"
+              ></textarea>
+              <button
+                type="button"
+                class="btn btn-light position-absolute top-50 start-0 translate-middle-y ms-2"
+              >
+                작업자 추가
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <h3>댓글</h3>
+          <div class="mb-3">
+            <div
+              class="mb-3 position-relative"
+              style="box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)"
+            >
+              <button type="submit" class="btn btn-primary position-absolute top-0 end-0 mt-2 me-2">
+                수정
+              </button>
+              <textarea
+                class="form-control"
+                id="commentText"
+                rows="3"
+                style="padding-left: 110px"
+              ></textarea>
+              <button
+                type="submit"
+                class="btn btn-primary position-absolute bottom-0 end-0 mb-2 me-2"
+              >
+                삭제
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    <script>
+      document.getElementById('taskForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const taskTitle = document.getElementById('taskTitle').value;
+        const taskDescription = document.getElementById('taskDescription').value;
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        const invitePeople = document.getElementById('invitePeople').value;
+
+        // 여기서 저장 로직을 추가해주세요
+        console.log('할 일 추가:', taskTitle, taskDescription, startDate, endDate, invitePeople);
+
+        // 폼 초기화
+        document.getElementById('taskForm').reset();
+      });
+    </script>
+  </body>
+</html>
