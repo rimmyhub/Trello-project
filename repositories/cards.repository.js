@@ -1,30 +1,51 @@
-const { Cards } = require('../models');
+const { Card } = require('../models');
 
 class CardRepository {
-  findOne = async (cardId) => {
-    return await Cards.findOne({
-      attributes: ['cardId', 'columnId', 'name', 'description', 'startDate', 'dueDate'],
-      where: { cardId: cardId },
-    });
+  // 카드 전체 조회
+  findAllCard = async (columnId) => {
+    return await Card.findAll({ where: { columnId } });
   };
 
-  createOne = async (columnId, name, color, description, startDate, dueDate) => {
-    return await Cards.create({ columnId, name, color, description, startDate, dueDate });
+  // 카드 조회
+  findCard = async (columnId, cardId) => {
+    return await Card.findOne({ where: { columnId, cardId } });
   };
 
-  updateOne = async (name, color, description, startDate, dueDate, cardId) => {
-    return await Cards.update(
-      { name, color, description, startDate, dueDate },
-      { where: { cardId } }
+  // 카드 조회
+  findCardId = async ({ cardId }) => {
+    return await Card.findOne({ where: { cardId } });
+  };
+
+  //카드 생성
+  createOne = async ({ columnId, userId, name, color, description, startDate, dueDate }) => {
+    return await Card.create({ columnId, userId, name, color, description, startDate, dueDate });
+  };
+
+  // 카드 수정
+  updateOne = async ({
+    columnId,
+    userId,
+    cardId,
+    name,
+    color,
+    description,
+    startDate,
+    dueDate,
+  }) => {
+    return await Card.update(
+      { columnId, userId, name, color, description, startDate, dueDate },
+      { where: { cardId, userId } },
     );
   };
 
-  deleteOne = async (cardId) => {
-    return await Cards.destroy({ where: { cardId } });
+  // 카드 삭제
+  deleteOne = async ({ columnId, cardId, userId }) => {
+    return await Card.destroy({ where: { columnId, cardId, userId } });
   };
 
-  updateColumn = async (columnId, cardId) => {
-    return await Cards.update(columnId, { where: { cardId } });
+  // 카드 수정
+  updateColumn = async ({ columnId, userId, cardId }) => {
+    return await Card.update({ columnId }, { where: { userId, cardId } });
   };
 }
 

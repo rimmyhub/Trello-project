@@ -27,7 +27,12 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
+      position: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+      },
       name: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       createdAt: {

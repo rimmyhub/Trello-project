@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const userRouter = require('./routes/users.router');
 const boardRouter = require('./routes/boards.router');
 const columnRouter = require('./routes/columns.router');
+const commentRouter = require('./routes/comment.router');
 
 const boardShareRouter = require('./routes/board-shares.router');
 
@@ -26,7 +27,14 @@ app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/views/static'));
 app.use('/', viewRouter);
 
-app.use('/api', [boardRouter, userRouter, boardShareRouter, columnRouter]);
+app.use('/api', [
+  boardRouter,
+  userRouter,
+  boardShareRouter,
+  columnRouter,
+  cardRouter,
+  commentRouter,
+]);
 
 app.listen(PORT, () => {
   console.log(PORT, '포트 번호로 서버가 실행되었습니다.');
