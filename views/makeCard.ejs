@@ -11,20 +11,49 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1 class="mb-4 text-center">할 일 관리</h1>
+      <h1 class="mb-4 text-center">카드 작성 페이지</h1>
       <div class="row justify-content-center">
         <div class="col-md-6">
           <h3>할 일 추가</h3>
           <form id="taskForm">
             <div class="mb-3">
-              <label for="taskTitle" class="form-label">할 일</label>
+              <label for="taskName" class="form-label">이름</label>
               <input
                 type="text"
                 class="form-control"
-                id="taskTitle"
+                id="taskName"
                 placeholder="할 일을 입력하세요"
                 required
               />
+            </div>
+            <div class="form-check">
+              <label for="color" class="form-label"> 카드 색 </label><br />
+              <input class="form-check-red" type="radio" name="color" id="red" value="option1" />
+              <label class="form-check-label" for="exampleRadios1"> 빨강 </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-blue" type="radio" name="color" id="blue" value="option2" />
+              <label class="form-check-label" for="exampleRadios2"> 파랑 </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-yellow"
+                type="radio"
+                name="color"
+                id="yellow"
+                value="option3"
+              />
+              <label class="form-check-label" for="exampleRadios2"> 노랑 </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-green"
+                type="radio"
+                name="color"
+                id="green"
+                value="option4"
+              />
+              <label class="form-check-label" for="exampleRadios2"> 초록 </label>
             </div>
             <div class="mb-3">
               <label for="taskDescription" class="form-label">할 일 설명</label>
@@ -51,7 +80,7 @@
             <button type="button" class="btn btn-secondary">초기화</button>
           </form>
         </div>
-        <div class="col-md-6 mt-4">
+        <!-- <div class="col-md-6 mt-4">
           <h3>댓글</h3>
           <form>
             <div class="mb-3">
@@ -64,9 +93,8 @@
             <li class="list-group-item">
               <p>댓글 내용...</p>
             </li>
-            <!-- 다른 댓글 항목들도 반복적으로 추가 -->
           </ul>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -74,14 +102,14 @@
     <script>
       document.getElementById('taskForm').addEventListener('submit', function (event) {
         event.preventDefault();
-        const taskTitle = document.getElementById('taskTitle').value;
+        const taskName = document.getElementById('taskName').value;
         const taskDescription = document.getElementById('taskDescription').value;
         const startDate = document.getElementById('startDate').value;
         const endDate = document.getElementById('endDate').value;
         const invitePeople = document.getElementById('invitePeople').value;
 
         // 여기서 저장 로직을 추가해주세요
-        console.log('할 일 추가:', taskTitle, taskDescription, startDate, endDate, invitePeople);
+        console.log('할 일 추가:', taskName, taskDescription, startDate, endDate, invitePeople);
 
         // 폼 초기화
         document.getElementById('taskForm').reset();
