@@ -17,35 +17,7 @@
 </head>
 
 <body>
-  <!-- GNB 영역: 페이지 상단에 위치한 네비게이션 바. 다양한 섹션으로 이동할 수 있는 링크 모음 -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-      <a class="navbar-brand" href="#">Trello Board</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">로그인</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">회원가입</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+<%- include('includes/header') %>
 
   <!-- 메인 영역: 페이지의 실제 내용이 표시되는 부분 -->
   <div class="container mt-5">
@@ -78,36 +50,7 @@
           </head>
 
           <body>
-            <!-- GNB 영역 -->
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-              <div class="container">
-                <a class="navbar-brand" href="#">Trello Board</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                  aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                  <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">로그인</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">회원가입</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-        </div>
-      </div>
+  
 
       <!-- 모달 -->
       <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel"
@@ -161,12 +104,7 @@
         </div>
       </div>
 
-      <!-- Footer 영역 -->
-      <footer class="bg-light text-center py-3 fixed-bottom">
-        <p>&copy; 2023 Trello Board. All rights reserved.</p>
-      </footer>
-
-      <script></script>
+<%- include('includes/footer') %>
 </body>
 
 </html>

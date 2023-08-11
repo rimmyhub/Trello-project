@@ -1,14 +1,14 @@
-document.getElementById('taskForm').addEventListener('submit', function (event) {
-  event.preventDefault();
-  const taskTitle = document.getElementById('taskTitle').value;
-  const taskDescription = document.getElementById('taskDescription').value;
-  const startDate = document.getElementById('startDate').value;
-  const endDate = document.getElementById('endDate').value;
-  const invitePeople = document.getElementById('invitePeople').value;
+// router.get('/cards/:cardId', async (req, res) => {
+//   const cardId = req.params.cardId;
 
-  // 여기서 저장 로직을 추가해주세요
-  console.log('할 일 추가:', taskTitle, taskDescription, startDate, endDate, invitePeople);
+//   try {
+//     const response = await axios.get(`/api/cards/${cardId}`);
 
-  // 폼 초기화
-  document.getElementById('taskForm').reset();
-});
+//     return res.render('card', { card: cardData });
+//   } catch (error) {
+//     console.error('Error fetching card data:', error);
+//     return res.status(500).send('Error fetching card data');
+//   }
+// });
+
+// module.exports = router;
