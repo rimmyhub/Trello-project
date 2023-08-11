@@ -29,21 +29,19 @@ async function fetchColumns() {
   }
 }
 
-// DOM에 컬럼 데이터 표시하는 함수
 async function displayColumns() {
   const columnsContainer = document.getElementById('columns-container');
-  columnsContainer.innerHTML = ''; // 기존의 컬럼 데이터를 초기화
+  columnsContainer.innerHTML = '';
 
-  const columns = await fetchColumns(); // 서버에서 컬럼 정보 가져오기
+  const columns = await fetchColumns();
 
   const sortableOptions = {
-    animation: 150, // 드래그 애니메이션 지속시간 (밀리초),
-    swapThreshold: 0.5, // 컬럼 스왑 임계값 설정
+    animation: 150,
+    swapThreshold: 0.5,
     onEnd: async (event) => {
       const fromIndex = event.oldIndex;
       const toIndex = event.newIndex;
 
-      // 서버에 컬럼 순서 업데이트 요청
       try {
         const jwtToken = getJwtToken();
         const response = await fetch(`/api/${boardId}/column-order`, {
@@ -64,41 +62,77 @@ async function displayColumns() {
     }
   };
 
-  // 컬럼 구역 전체에 드래그 앤 드롭 기능 추가
   new Sortable(columnsContainer, sortableOptions);
 
   columns.forEach(column => {
-    const columnSection = document.createElement('section'); // 각 컬럼의 구역 생성
+    const columnSection = document.createElement('section');
     columnSection.classList.add('column-section');
 
-    const columnTitleWrapper = document.createElement('div'); // 컬럼 제목을 감싸는 요소
+    const columnTitleWrapper = document.createElement('div');
     columnTitleWrapper.classList.add('column-title-wrapper');
 
-    const columnTitle = document.createElement('h2'); // 컬럼 제목 표시
+    const columnTitle = document.createElement('h2');
     columnTitle.textContent = column.name;
     columnTitleWrapper.appendChild(columnTitle);
 
-    const columnElement = document.createElement('div'); // 컬럼 요소 표시
+    const editButton = document.createElement('button');
+    editButton.textContent = 'Edit Column';
+    columnTitleWrapper.appendChild(editButton);
+
+    const editForm = document.createElement('form');
+    const editInput = document.createElement('input');
+    const saveButton = document.createElement('button');
+    const cancelButton = document.createElement('button');
+
+    editForm.style.display = 'none';
+
+    editInput.type = 'text';
+    editInput.placeholder = 'Enter new column name';
+    saveButton.textContent = 'Save';
+    cancelButton.textContent = 'Cancel';
+
+    editForm.appendChild(editInput);
+    editForm.appendChild(saveButton);
+    editForm.appendChild(cancelButton);
+    columnTitleWrapper.appendChild(editForm);
+
+    editButton.addEventListener('click', () => {
+      columnTitle.style.display = 'none';
+      editForm.style.display = 'block';
+      editInput.value = column.name;
+    });
+
+    saveButton.addEventListener('click', () => {
+      const newName = editInput.value.trim();
+      if (newName) {
+        updateColumn(column.columnId, newName);
+        columnTitle.textContent = newName;
+        columnTitle.style.display = 'block';
+        editForm.style.display = 'none';
+      }
+    });
+
+    cancelButton.addEventListener('click', () => {
+      columnTitle.style.display = 'block';
+      editForm.style.display = 'none';
+    });
+
+    const columnElement = document.createElement('div');
     columnElement.classList.add('column');
     columnElement.textContent = column.name;
     columnTitleWrapper.appendChild(columnElement);
 
-    // 컬럼 삭제 버튼 생성
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete Column';
     columnTitleWrapper.appendChild(deleteButton);
 
-    // 컬럼 삭제 버튼 클릭 시 컬럼 삭제 함수 호출
     deleteButton.addEventListener('click', () => {
-      console.log({ column })
-      console.log("column.columnId", column.columnId)
-      deleteColumn(column.columnId); // 컬럼 ID 전달
+      deleteColumn(column.columnId);
     });
 
     columnSection.appendChild(columnTitleWrapper);
     columnsContainer.appendChild(columnSection);
 
-    // 컬럼 내부에서의 드래그 앤 드롭 기능 추가
     new Sortable(columnTitleWrapper, {
       animation: 150,
       swapThreshold: 0.5,
@@ -106,42 +140,28 @@ async function displayColumns() {
   });
 }
 
-// 컬럼 생성 폼 이벤트 리스너
-const createColumnForm = document.getElementById('create-column-form');
-createColumnForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const columnNameInput = document.getElementById('column-name');
-  const columnName = columnNameInput.value.trim();
+async function updateColumn(columnId, newName) {
+  try {
+    const jwtToken = getJwtToken();
+    const response = await fetch(`/api/${boardId}/column/${columnId}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name: newName })
+    });
 
-  if (columnName) {
-    try {
-      const jwtToken = getJwtToken();
-      const response = await fetch(`/api/${boardId}/column`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${jwtToken}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name: columnName }) // 컬럼 이름 전송
-      });
-
-      if (response.ok) {
-        // 성공적으로 컬럼을 생성한 경우, 화면 갱신
-        columnNameInput.value = ''; // 입력 필드 초기화
-
-        // 생성된 컬럼을 추가한 후, 컬럼을 다시 표시
-        const createdColumn = await response.json();
-        displayColumn(createdColumn);
-      } else {
-        throw new Error('컬럼 생성 실패');
-      }
-    } catch (error) {
-      console.error(error);
+    if (!response.ok) {
+      throw new Error('컬럼 수정 실패');
     }
-  }
-});
 
-// 컬럼 삭제 함수
+    displayColumns();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 async function deleteColumn(columnId) {
   try {
     const jwtToken = getJwtToken();
@@ -157,11 +177,120 @@ async function deleteColumn(columnId) {
       throw new Error('컬럼 삭제 실패');
     }
 
-    // 컬럼 삭제 후 화면 갱신
     displayColumns();
   } catch (error) {
     console.error(error);
   }
+}
+
+document.addEventListener('DOMContentLoaded', displayColumns);
+
+const createColumnForm = document.getElementById('create-column-form');
+createColumnForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const columnNameInput = document.getElementById('column-name');
+  const columnName = columnNameInput.value.trim();
+
+  if (columnName) {
+    try {
+      const jwtToken = getJwtToken();
+      const response = await fetch(`/api/${boardId}/column`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${jwtToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: columnName })
+      });
+
+      if (response.ok) {
+        columnNameInput.value = '';
+
+        const createdColumn = await response.json();
+        displayColumn(createdColumn);
+      } else {
+        throw new Error('컬럼 생성 실패');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+});
+
+async function displayColumn(column) {
+  const columnsContainer = document.getElementById('columns-container');
+  const columnSection = document.createElement('section');
+  columnSection.classList.add('column-section');
+
+  const columnTitleWrapper = document.createElement('div');
+  columnTitleWrapper.classList.add('column-title-wrapper');
+
+  const columnTitle = document.createElement('h2');
+  columnTitle.textContent = column.name;
+  columnTitleWrapper.appendChild(columnTitle);
+
+  const columnElement = document.createElement('div');
+  columnElement.classList.add('column');
+  columnElement.textContent = column.name;
+  columnTitleWrapper.appendChild(columnElement);
+
+  const editButton = document.createElement('button');
+  editButton.textContent = 'Edit Column';
+  columnTitleWrapper.appendChild(editButton);
+
+  const editForm = document.createElement('form');
+  const editInput = document.createElement('input');
+  const saveButton = document.createElement('button');
+  const cancelButton = document.createElement('button');
+
+  editForm.style.display = 'none';
+
+  editInput.type = 'text';
+  editInput.placeholder = 'Enter new column name';
+  saveButton.textContent = 'Save';
+  cancelButton.textContent = 'Cancel';
+
+  editForm.appendChild(editInput);
+  editForm.appendChild(saveButton);
+  editForm.appendChild(cancelButton);
+  columnTitleWrapper.appendChild(editForm);
+
+  editButton.addEventListener('click', () => {
+    columnTitle.style.display = 'none';
+    editForm.style.display = 'block';
+    editInput.value = column.name;
+  });
+
+  saveButton.addEventListener('click', () => {
+    const newName = editInput.value.trim();
+    if (newName) {
+      updateColumn(column.columnId, newName);
+      columnTitle.textContent = newName;
+      columnTitle.style.display = 'block';
+      editForm.style.display = 'none';
+    }
+  });
+
+  cancelButton.addEventListener('click', () => {
+    columnTitle.style.display = 'block';
+    editForm.style.display = 'none';
+  });
+
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Delete Column';
+  columnTitleWrapper.appendChild(deleteButton);
+
+  deleteButton.addEventListener('click', () => {
+    deleteColumn(column.columnId);
+  });
+
+  columnSection.appendChild(columnTitleWrapper);
+  columnsContainer.appendChild(columnSection);
+
+  new Sortable(columnTitleWrapper, {
+    animation: 150,
+    swapThreshold: 0.5,
+  });
 }
 
 
