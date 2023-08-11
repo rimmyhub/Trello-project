@@ -17,8 +17,12 @@ router.get('/:boardId', async (req, res) => {
   return res.render('column');
 });
 
-router.get('/cards/:cardId', async (req, res) => {
-  return res.render('card');
+// router.get('/cards/:cardId', async (req, res) => {
+//   return res.render('card');
+// });
+
+router.get('/card-edit/:cardId', async (req, res) => {
+  return res.render('card-edit');
 });
 
 module.exports = router;

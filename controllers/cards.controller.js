@@ -6,8 +6,8 @@ class CardController {
   // 전체 카드 조회
   getAllCard = async (req, res) => {
     try {
-      const { columnId } = req.params;
-      const findCard = await this.cardService.findAllCard(columnId);
+      const { cardId } = req.params;
+      const findCard = await this.cardService.findAllCard(cardId);
       res.status(200).json({ findCard });
     } catch (err) {
       console.error(err.name, ':', err.message);
