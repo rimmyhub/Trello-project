@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error fetching data:', error);
   }
 });
+
 function updateActivityList(boards) {
   const activityList = document.getElementById('activityList');
 
@@ -42,6 +43,7 @@ function updateActivityList(boards) {
   });
 }
 
+// 수정 버튼
 async function handleEditClick(boardId) {
   const newData = {
     name: '트렐로프로젝트 수정',
@@ -89,6 +91,7 @@ async function handleEditClick(boardId) {
   });
 }
 
+// 삭제
 function handleDeleteClick(boardId) {
   // 삭제 버튼을 눌렀을 때의 동작을 정의합니다.
   console.log(`Delete button clicked for boardId: ${boardId}`);
