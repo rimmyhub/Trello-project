@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error fetching data:', error);
   }
 });
+
 function updateActivityList(boards) {
   const activityList = document.getElementById('activityList'); // activityList 요소 가져오기
 
