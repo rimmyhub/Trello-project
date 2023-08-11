@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <title>Task Management</title>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="mb-4 text-center">카드 작성 페이지</h1>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <h3>할 일 추가</h3>
+          <form id="taskForm">
+            <div class="mb-3">
+              <label for="taskName" class="form-label">이름</label>
+              <input
+                type="text"
+                class="form-control"
+                id="taskName"
+                placeholder="할 일을 입력하세요"
+                required
+              />
+            </div>
+            <div class="form-check">
+              <label for="color" class="form-label"> 카드 색 </label><br />
+              <input class="form-check-red" type="radio" name="color" id="red" value="option1" />
+              <label class="form-check-label" for="exampleRadios1"> 빨강 </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-blue" type="radio" name="color" id="blue" value="option2" />
+              <label class="form-check-label" for="exampleRadios2"> 파랑 </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-yellow"
+                type="radio"
+                name="color"
+                id="yellow"
+                value="option3"
+              />
+              <label class="form-check-label" for="exampleRadios2"> 노랑 </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-green"
+                type="radio"
+                name="color"
+                id="green"
+                value="option4"
+              />
+              <label class="form-check-label" for="exampleRadios2"> 초록 </label>
+            </div>
+            <div class="mb-3">
+              <label for="taskDescription" class="form-label">할 일 설명</label>
+              <textarea class="form-control" id="taskDescription" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="startDate" class="form-label">시작일</label>
+              <input type="date" class="form-control" id="startDate" />
+            </div>
+            <div class="mb-3">
+              <label for="endDate" class="form-label">종료일</label>
+              <input type="date" class="form-control" id="endDate" />
+            </div>
+            <div class="mb-3">
+              <label for="invitePeople" class="form-label">할 일 참여자 초대</label>
+              <input
+                type="text"
+                class="form-control"
+                id="invitePeople"
+                placeholder="참여할 사람의 이메일을 입력하세요"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">할 일 추가</button>
+            <button type="button" class="btn btn-secondary">초기화</button>
+          </form>
+        </div>
+        <!-- <div class="col-md-6 mt-4">
+          <h3>댓글</h3>
+          <form>
+            <div class="mb-3">
+              <label for="commentText" class="form-label">댓글 작성</label>
+              <textarea class="form-control" id="commentText" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">댓글 추가</button>
+          </form>
+          <ul class="list-group mt-3">
+            <li class="list-group-item">
+              <p>댓글 내용...</p>
+            </li>
+          </ul>
+        </div> -->
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    <script>
+      document.getElementById('taskForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const taskName = document.getElementById('taskName').value;
+        const taskDescription = document.getElementById('taskDescription').value;
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        const invitePeople = document.getElementById('invitePeople').value;
+
+        // 여기서 저장 로직을 추가해주세요
+        console.log('할 일 추가:', taskName, taskDescription, startDate, endDate, invitePeople);
+
+        // 폼 초기화
+        document.getElementById('taskForm').reset();
+      });
+    </script>
+  </body>
+</html>
