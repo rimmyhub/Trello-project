@@ -5,9 +5,9 @@ class CommentsController {
 
   // 댓글 조회
   findCardComment = async (req, res) => {
-    const { cardId } = req.params;
+    const { commentId } = req.params;
 
-    const { code, data } = await this.commentsService.findComment({ cardId });
+    const { code, data } = await this.commentsService.findComment({ commentId });
     res.status(code).json({ data });
   };
 
