@@ -4,8 +4,8 @@ class CardService {
   cardRepository = new CardRepository();
 
   //
-  findAllCard = async (columnId) => {
-    const findCard = await this.cardRepository.findAllCard(columnId);
+  findAllCard = async (cardId) => {
+    const findCard = await this.cardRepository.findAllCard(cardId);
     return findCard;
   };
 

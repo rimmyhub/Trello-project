@@ -7,8 +7,8 @@ const auth = new AuthMiddleware();
 const CardsController = require('../controllers/cards.controller');
 const cardsController = new CardsController();
 
-// 칼럼 - > 카드 전체 조회
-CardRouter.get('/:columnId/cards', cardsController.getAllCard);
+// 카드 전체 조회
+CardRouter.get('/cards/:cardId', cardsController.getAllCard);
 
 // 카드 상세 조회
 CardRouter.get('/:columnId/cards/:cardId', cardsController.getCard);
