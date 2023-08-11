@@ -3,9 +3,9 @@ const { Op } = require('sequelize');
 
 class CommentsRepository {
   //댓글 조회
-  findComment = async ({ cardId }) => {
-    return await Comment.findAll({
-      where: { cardId },
+  findComment = async ({ commentId }) => {
+    return await Comment.findOne({
+      where: { commentId },
     });
   };
 
