@@ -30,4 +30,6 @@ CardRouter.patch(
   cardsController.columnIdModify,
 );
 
+// 순서 바꾸고 디비 저장하는 법
+
 module.exports = CardRouter;
