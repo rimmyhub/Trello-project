@@ -1,4 +1,4 @@
-// 페이지 로드 시 fetch 요청 보내고 데이터 처리
+//페이지 로드 시 fetch 요청 보내고 데이터 처리
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     const response = await fetch('/api/boards'); // GET 요청을 보내는 URL을 적절히 변경해주세요
@@ -21,6 +21,16 @@ function updateActivityList(boards) {
 
     const buttonsDiv = document.createElement('div'); // 새로운 div 요소 생성
     buttonsDiv.className = 'board-buttons'; // css 클래스 추가
+
+    const getButton = document.createElement('button');
+    getButton.className = 'get-button btn btn-primary btn-sm'; // css 클래스 추가
+    getButton.textContent = '조회'; // 버튼 텍스트 설정
+    getButton.addEventListener('click', () => handleEditClick(boards)); // 클릭 이벤트 리스너 추가
+
+    const createButton = document.createElement('button');
+    createButton.className = 'create-button btn btn-primary btn-sm'; // css 클래스 추가
+    createButton.textContent = '생성'; // 버튼 텍스트 설정
+    createButton.addEventListener('click', () => handleEditClick(boards)); // 클릭 이벤트 리스너 추가
 
     const editButton = document.createElement('button'); // 새로운 button 요소 생성
     editButton.className = 'edit-button btn btn-primary btn-sm'; // css 클래스 추가
@@ -50,13 +60,46 @@ async function handleEditClick(boardId) {
     description: '프로젝트 설명',
   };
 
-  // 모달 내용 업데이트
+  // ------------------------------공통------------------------------
+  // 보드 전체 조회
+
+  $(document).ready(function () {
+    $('#getBoardButton').click(function () {
+      $.get('/api/boards', function (data) {
+        // 서버에서 받아온 데이터를 처리하는 로직을 추가할 수 있습니다.
+        console.log(data); // 예시로 콘솔에 데이터를 출력합니다.
+      });
+    });
+  });
+
+  // -----------------------------------------------------------------------------------
+  // 페이지 로드 시 fetch 요청 보내고 데이터 처리
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const response = await fetch('/api/boards'); // GET 요청을 보내는 URL을 적절히 변경해주세요
+      const data = await response.json(); // 서버 응답 데이터를 json파싱
+      updateActivityList(data.message); // 파싱한 데이터로 화면 업데이트 함수 호출
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  });
+
+  // 모달 내용 업데이트: 공통인지 수정용인지 고민해보기
   document.getElementById('editName').value = newData.name; // 모달 내 입력 필드
   document.getElementById('editColor').value = newData.color; // 모달 내 입력 필드
   document.getElementById('editDescription').value = newData.description; //모달 내 입력 필드
 
   // 모달 열기
   $('#editModal').modal('show'); // 모달을 열어서 보여줌
+
+  // 보드 생성 버튼 클릭 이벤트 처리
+  document.getElementById('createBoardButton').addEventListener('click', () => {
+    $('#createModal').modal('show');
+  });
+
+  // 이하 생략
+
+  //---------------------------------------------------------------------------------------
 
   // 수정 - 저장 버튼 클릭 이벤트 처리
   document.getElementById('editSaveButton').addEventListener('click', async () => {
@@ -106,14 +149,42 @@ function getColorClass(color) {
       return '';
   }
 }
+//----------------------------------삭제 기능---------------------------
+// 현재 로그인한 사용자의 정보를 얻어오는 함수
+// async function getLoggedInUser() {
+//   try {
+//     const response = await fetch('/api/current-user'); // 백엔드에서 현재 로그인한 사용자의 정보를 반환하는 엔드포인트
+//     const user = await response.json();
+//     return user;
+//   } catch (error) {
+//     console.error('Error fetching logged-in user:', error);
+//     return null;
+//   }
+// }
 
-// 보드 삭제 버튼이 클릭되었을 때 동작 정의.
-// 현재 그냥 콘솔에 삭제 버튼이 눌린 보드의 id 출력.
-// 서버와 통신하여 해당 보드를 삭제하는 로직 추가해야 함
+// 삭제 버튼 클릭 이벤트 처리
+async function handleDeleteClick(boardId) {
+  const confirmation = confirm('정말로 이 보드를 삭제하시겠습니까?');
 
-// 보드 삭제 버튼이 클릭되었을 때의 동작을 담당
-// 모달 창을 열어서 삭제할 데이터를 표시, 저장 버튼이 클릭되면 삭제한 내용을 서버로 전송하여 보드를 업데이트
-function handleDeleteClick(boardId) {
-  // 삭제 버튼을 눌렀을 때의 동작을 정의합니다.
-  alert(`Delete button clicked for boardId: ${boardId}`);
+  if (confirmation) {
+    try {
+      const response = await fetch(`/api/boards/${boardId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        // 삭제 성공
+        alert('Board deleted successfully');
+        $('#editModal').modal('hide');
+        location.reload();
+      } else {
+        console.error('Failed to delete board');
+      }
+    } catch (error) {
+      console.error('Error deleting board:', error);
+    }
+  }
 }
