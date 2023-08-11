@@ -52,6 +52,7 @@ class ColumnService {
         }
     }
 
+
     // 다른 메서드들도 추가로 구현해야 합니다.
 }
 
