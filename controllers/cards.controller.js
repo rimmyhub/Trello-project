@@ -6,8 +6,8 @@ class CardController {
   // 전체 카드 조회
   getAllCard = async (req, res) => {
     try {
-      const { cardId } = req.params;
-      const findCard = await this.cardService.findAllCard(cardId);
+      const { columnId } = req.params;
+      const findCard = await this.cardService.findAllCard(columnId);
       res.status(200).json({ findCard });
     } catch (err) {
       console.error(err.name, ':', err.message);
@@ -54,11 +54,10 @@ class CardController {
   // 카드 수정
   updateCard = async (req, res) => {
     try {
-      const { columnId, cardId } = req.params;
+      const { cardId } = req.params;
       const { name, color, description, startDate, dueDate } = req.body;
       const { userId } = res.locals.user;
       const { code, message } = await this.cardService.updateCard({
-        columnId,
         cardId,
         userId,
         name,

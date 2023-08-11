@@ -7,15 +7,15 @@ const auth = new AuthMiddleware();
 const CommentsController = require('../controllers/comment.controller');
 const commentsController = new CommentsController();
 
-// 카드 내 댓글 조회
-commentsRouter.get('/:cards/comments', commentsController.findCardComment);
+// 댓글 조회
+commentsRouter.get('/comments/:commentId', commentsController.findCardComment);
 
 // 댓글 작성
-commentsRouter.post('/:cardId/comments', auth.verifyAccessToken, commentsController.cerateComment);
+commentsRouter.post('/comments/:cardId', auth.verifyAccessToken, commentsController.cerateComment);
 
 // 댓글 수정
 commentsRouter.put(
-  '/:cardId/comments/:commentId',
+  '/comments/:commentId',
   auth.verifyAccessToken,
   commentsController.updateComment,
 );

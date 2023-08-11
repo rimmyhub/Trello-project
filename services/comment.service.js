@@ -4,9 +4,9 @@ class CommentsService {
   commentsRepository = new CommentsRepository();
 
   // 댓글 조회
-  findComment = async ({ cardId }) => {
+  findComment = async ({ commentId }) => {
     try {
-      const comments = await this.commentsRepository.findComment({ cardId });
+      const comments = await this.commentsRepository.findComment({ commentId });
 
       return { code: 200, data: comments };
     } catch (error) {
