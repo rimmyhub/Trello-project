@@ -31,7 +31,8 @@ async function fetchColumns() {
 
 // DOM에 컬럼 데이터 표시하는 함수
 async function displayColumns() {
-  const columnsContainer = document.getElementById('columns-container'); // 컬럼을 표시할 컨테이너 선택
+  const columnsContainer = document.getElementById('columns-container');
+  columnsContainer.innerHTML = ''; // 기존의 컬럼 데이터를 초기화
 
   const columns = await fetchColumns(); // 서버에서 컬럼 정보 가져오기
 
@@ -82,6 +83,18 @@ async function displayColumns() {
     columnElement.textContent = column.name;
     columnTitleWrapper.appendChild(columnElement);
 
+    // 컬럼 삭제 버튼 생성
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete Column';
+    columnTitleWrapper.appendChild(deleteButton);
+
+    // 컬럼 삭제 버튼 클릭 시 컬럼 삭제 함수 호출
+    deleteButton.addEventListener('click', () => {
+      console.log({ column })
+      console.log("column.columnId", column.columnId)
+      deleteColumn(column.columnId); // 컬럼 ID 전달
+    });
+
     columnSection.appendChild(columnTitleWrapper);
     columnsContainer.appendChild(columnSection);
 
@@ -92,6 +105,7 @@ async function displayColumns() {
     });
   });
 }
+
 // 컬럼 생성 폼 이벤트 리스너
 const createColumnForm = document.getElementById('create-column-form');
 createColumnForm.addEventListener('submit', async (event) => {
@@ -127,29 +141,29 @@ createColumnForm.addEventListener('submit', async (event) => {
   }
 });
 
-// 컬럼 추가 및 화면 갱신 함수
-async function displayColumn(column) {
-  const columnsContainer = document.getElementById('columns-container');
-  const columnSection = document.createElement('section');
-  columnSection.classList.add('column-section');
+// 컬럼 삭제 함수
+async function deleteColumn(columnId) {
+  try {
+    const jwtToken = getJwtToken();
+    const response = await fetch(`/api/${boardId}/column/${columnId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
 
-  const columnTitleWrapper = document.createElement('div');
-  columnTitleWrapper.classList.add('column-title-wrapper');
+    if (!response.ok) {
+      throw new Error('컬럼 삭제 실패');
+    }
 
-  const columnTitle = document.createElement('h2');
-  columnTitle.textContent = column.name;
-  columnTitleWrapper.appendChild(columnTitle);
-
-  const columnElement = document.createElement('div');
-  columnElement.classList.add('column');
-  columnElement.textContent = column.name;
-  columnTitleWrapper.appendChild(columnElement);
-
-  columnSection.appendChild(columnTitleWrapper);
-  columnsContainer.appendChild(columnSection);
-
-  // 컬럼 내부에서의 드래그 앤 드롭 기능 추가
+    // 컬럼 삭제 후 화면 갱신
+    displayColumns();
+  } catch (error) {
+    console.error(error);
+  }
 }
+
 
 
 // 페이지 로드 시 컬럼 데이터 표시

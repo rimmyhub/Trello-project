@@ -24,9 +24,12 @@ class ColumnRepository {
     }
 
     async deleteColumn(columnId, userId) {
-        const deletedColumn = await Column.destroy({ where: { userId: columnId, userId } });
+        const deletedColumn = await Column.destroy({ where: { userId, columnId } });
+        //const deletedColumn = await Column.destroy({ where: { userId:userId, columnId:columnId } });
+        //const deletedColumn = await Column.destroy({ where: { userId:2, columnId:3 } });
         return deletedColumn;
     }
+
     async getAllColumnsForBoard(boardId) {
         const columns = await Column.findAll({
             where: { boardId }
@@ -41,7 +44,7 @@ class ColumnRepository {
 
             // 아래는 가상의 예시입니다. 실제 데이터베이스 업데이트 로직을 추가해야 합니다.
             await Promise.all(columnOrder.map(async (columnId, index) => {
-                await Column.update({ order: index }, { where: { userId: columnId, boardId } });
+                await Column.update({ order: index }, { where: { id: columnId, boardId } });
             }));
         } catch (error) {
             throw new Error('컬럼 순서 업데이트 실패');
