@@ -3,18 +3,20 @@ const CardRepository = require('../repositories/cards.repository');
 class CardService {
   cardRepository = new CardRepository();
 
-  findCard = async ({ columnId, cardId }) => {
-    const find = await this.cardRepository.findOne({ columnId, cardId });
+  //
+  findAllCard = async (columnId) => {
+    const findCard = await this.cardRepository.findAllCard(columnId);
+    return findCard;
+  };
 
-    if (!find) throw { code: 400, message: '카드를 찾을 수 없습니다.' };
-
+  // 카드 조회
+  findCard = async (columnId, cardId) => {
+    const find = await this.cardRepository.findCard(columnId, cardId);
     return find;
   };
 
+  // 카드 생성
   createCard = async ({ userId, columnId, name, color, description, startDate, dueDate }) => {
-    // if (!['red', 'blue', 'yellow', 'green'].includes(type)) {
-    //   throw res.status(400).json({ message: '알맞은 타입을 지정해주세요' });
-    // }
     await this.cardRepository.createOne({
       userId,
       columnId,
@@ -27,6 +29,7 @@ class CardService {
     return { code: 200, message: '카드 작성이 완료되었습니다.' };
   };
 
+  // 카드 수정
   updateCard = async ({
     columnId,
     userId,
@@ -37,38 +40,45 @@ class CardService {
     startDate,
     dueDate,
   }) => {
-    const findCard = await this.cardRepository.findOne({ cardId });
+    const findCard = await this.cardRepository.findCardId({ cardId });
     if (!findCard) throw { code: 400, message: '카드를 찾을 수 없습니다.' };
 
-    const findCardUserId = findCard.UserId;
+    const findCardUserId = findCard.userId;
     if (userId !== findCardUserId) throw { code: 400, message: '카드 작성자가 아닙니다.' };
 
-    await this.cardRepository.updateOne(
-      { columnId, name, color, description, startDate, dueDate },
-      [{ cardId }, { userId }],
-    );
+    await this.cardRepository.updateOne({
+      columnId,
+      userId,
+      cardId,
+      name,
+      color,
+      description,
+      startDate,
+      dueDate,
+    });
     return { code: 200, message: '카드를 수정했습니다.' };
   };
 
-  deleteCard = async ({ cardId, userId }) => {
-    const findCard = await this.cardRepository.findOne({ cardId });
+  deleteCard = async ({ columnId, cardId, userId }) => {
+    const findCard = await this.cardRepository.findCardId({ cardId });
     if (!findCard) throw { code: 400, message: '카드를 찾을 수 없습니다.' };
 
-    const findCardUserId = findCard.UserId;
+    const findCardUserId = findCard.userId;
     if (userId !== findCardUserId) throw { code: 400, message: '카드 작성자가 아닙니다.' };
 
-    await this.cardRepository.deleteOne({ cardId });
+    await this.cardRepository.deleteOne({ columnId, cardId, userId });
     return { code: 200, message: '카드를 삭제했습니다.' };
   };
 
-  updateColumn = async ({ cardId, userId, columnId }) => {
-    const findCard = await this.cardRepository.findOne({ cardId });
+  // 칼럼 수정
+  updateColumn = async ({ columnId, userId, cardId }) => {
+    const findCard = await this.cardRepository.findCardId({ cardId });
     if (!findCard) throw { code: 400, message: '카드를 찾을 수 없습니다.' };
 
-    const findCardUserId = findCard.UserId;
+    const findCardUserId = findCard.userId;
     if (userId !== findCardUserId) throw { code: 400, message: '카드 작성자가 아닙니다.' };
 
-    await this.cardRepository.updateColumn({ columnId }, [{ cardId }, { userId }]);
+    await this.cardRepository.updateColumn({ columnId, userId, cardId });
     return { code: 200, message: '카드의 칼럼을 수정했습니다.' };
   };
 }
