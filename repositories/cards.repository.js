@@ -2,8 +2,8 @@ const { Card } = require('../models');
 
 class CardRepository {
   // 카드 전체 조회
-  findAllCard = async (columnId) => {
-    return await Card.findAll({ where: { columnId } });
+  findAllCard = async (cardId) => {
+    return await Card.findOne({ where: { cardId } });
   };
 
   // 카드 조회
