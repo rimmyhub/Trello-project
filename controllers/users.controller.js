@@ -1,11 +1,12 @@
 const bcrypt = require('bcrypt');
 const UsersService = require('../services/users.service');
 const AuthMiddleware = require('../middleware/auth.middleware');
-
+const { User } = require('../models');
 class UsersController {
-  usersService = new UsersService();
-  authMiddleware = new AuthMiddleware();
-
+  constructor() {
+    this.usersService = new UsersService();
+    this.authMiddleware = new AuthMiddleware();
+  }
   signUp = async (req, res) => {
     try {
       const { email, password, confirm, name, introduction } = req.body;
@@ -53,7 +54,7 @@ class UsersController {
       res.cookie('accessToken', accessToken);
       res.cookie('refreshToken', refreshToken);
 
-      res.status(200).json({ message: '로그인 되었습니다' });
+      res.status(200).json({ data: userId, message: '로그인 되었습니다' });
     } catch (err) {
       console.error(err.name, ':', err.message);
       return res.status(400).json({ message: `${err.message}` });
@@ -64,6 +65,7 @@ class UsersController {
   modifyUser = async (req, res) => {
     try {
       const { userId } = res.locals.user;
+      // users 모델의 name은 보드의 name을 말하는 건가요? 아니면 사용자의 이름?
       const { name, introduction } = req.body;
 
       await this.usersService.modifyUserInfo(userId, name, introduction);
@@ -83,6 +85,24 @@ class UsersController {
     } catch (err) {
       console.error(err.name, ':', err.message);
       return res.status(400).json({ message: `${err.message}` });
+    }
+  };
+
+  // 현재 로그인 된 사용자의 id를 가져옴
+  getBoardUserInfo = async (req, res) => {
+    try {
+      const { userId } = req.params; // 현재 로그인된 사용자의 ID를 가져옴
+      const data = await this.usersService.getUserById(userId);
+
+      if (!data) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      // 필요한 사용자 정보를 반환
+      return res.send({ data });
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      return res.status(500).json({ message: 'Internal server error' });
     }
   };
 }
