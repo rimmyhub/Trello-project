@@ -15,6 +15,17 @@ class BoardsService {
     }
   };
 
+  // 보드 상세 조회
+
+  findBoard = async ({ boardId }) => {
+    try {
+      const data = await this.boardsRepository.findBoardById({ boardId });
+      return { code: 200, data };
+    } catch (err) {
+      throw { code: 500, message: '예기치 못한 에러가 발생했습니다.' };
+    }
+  };
+
   // 보드 생성
   createBoard = async ({ userId, name, color, description }) => {
     try {

@@ -12,6 +12,7 @@ class BoardsController {
     return res.status(500).send('알 수 없는 에러가 발생');
   }
 
+  // 보드 전체
   getAllBoard = async (req, res) => {
     try {
       const { code, data } = await this.boardsService.findAllBoard();
@@ -24,6 +25,16 @@ class BoardsController {
     }
   };
 
+  // 보드 상세 조회
+  getBoard = async (req, res) => {
+    const { boardId } = req.params;
+    try {
+      const { code, data } = await this.boardsService.findBoard({ boardId });
+      return res.status(code).json({ data });
+    } catch (error) {
+      return this.handleError(res, error);
+    }
+  };
   // 보드 생성
   createBoard = async (req, res, next) => {
     try {

@@ -2,7 +2,18 @@ const { Board, User, BoardShare } = require('../models');
 const { Op, Sequelize } = require('sequelize');
 class BoardsRepository {
   findAllBoard = async () => {
-    return await Board.findAll();
+    return await Board.findAll({
+      include: [
+        {
+          model: User,
+        },
+      ],
+    });
+  };
+
+  // 보드 상세 조회
+  findBoardById = async ({ boardId }) => {
+    return await Board.findOne({ where: { boardId } });
   };
 
   createBoard = async ({ userId, name, color, description }) => {
