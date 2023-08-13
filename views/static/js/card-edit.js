@@ -4,6 +4,7 @@ const taskName = document.querySelector('#taskName');
 const taskDescription = document.querySelector('#taskDescription');
 const startDateValue = document.querySelector('#startDate');
 const endDate = document.querySelector('#endDate');
+console.log(endDate);
 const editBtn = document.querySelector('.edit');
 const red = document.querySelector('#red');
 const yellow = document.querySelector('#yellow');
@@ -21,7 +22,6 @@ const getData = async () => {
     colorData = color;
     document.querySelector(`#${color}`).click();
     taskName.value = name; // 작업 이름
-    // color.value = resData.color; // 색상 (라디오 버튼 처리 방식에 따라 수정)
     taskDescription.value = description; // 작업 설명
     startDateValue.value = startDate; // 시작 날짜
     endDate.value = dueDate; // 마감 날짜
@@ -43,8 +43,8 @@ green.addEventListener('click', getColor);
 // 버튼 누르면 수정됨
 editBtn.addEventListener('click', async (e) => {
   e.preventDefault();
-  console.log(startDate.value);
-  console.log(endDate.value);
+  // console.log(startDate.value);
+  // console.log(endDate.value);
   try {
     const response = await fetch(`/api/cards/${cardId}`, {
       method: 'PUT',
