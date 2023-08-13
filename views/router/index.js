@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-
 router.get('/main', async (req, res) => {
   return res.render('main');
+});
+
+router.get('/board-edit/:boardId', async (req, res) => {
+  return res.render('board-edit');
 });
 
 router.get('/login', async (req, res) => {
