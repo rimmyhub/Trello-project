@@ -14,11 +14,11 @@ class BoardsController {
 
   getAllBoard = async (req, res) => {
     try {
-      const { code, message } = await this.boardsService.findAllBoard();
+      const { code, data } = await this.boardsService.findAllBoard();
       // const { code, message } = { code: 200, message: data };
       // const code = 200
       // const message = error
-      return res.status(code).json({ message });
+      return res.status(code).json({ data });
     } catch (error) {
       return this.handleError(res, error);
     }
