@@ -25,7 +25,7 @@ const getData = async () => {
 
     const inviteRes = await fetch(`/api/boards/${boardId}`);
     const { message } = await inviteRes.json();
-    console.log(message);
+    // console.log(message);
     const temp = message
       .map((data) => {
         return `
@@ -36,6 +36,7 @@ const getData = async () => {
 
     selectUser.innerHTML = temp;
     selectValue = message[0].User.name;
+    console.log(selectValue);
     const selectChange = () => {
       selectValue = selectUser.options[selectUser.selectedIndex].value;
       // console.log(selectValue);

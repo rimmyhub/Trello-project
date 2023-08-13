@@ -3,7 +3,17 @@ const CardService = require('../services/cards.service');
 class CardController {
   cardService = new CardService();
 
-  // 전체 카드 조회
+  getColumCard = async (req, res) => {
+    try {
+      const { columnId } = req.params;
+      const findCard = await this.cardService.getColum(columnId);
+      res.status(200).json({ findCard });
+    } catch (err) {
+      console.error(err.name, ':', err.message);
+    }
+  };
+
+  // 카드 단일 조회
   getAllCard = async (req, res) => {
     try {
       const { cardId } = req.params;

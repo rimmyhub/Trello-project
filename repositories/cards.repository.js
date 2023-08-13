@@ -1,7 +1,11 @@
 const { Card, CardShare, User, Column, Board } = require('../models');
 
 class CardRepository {
-  // 카드 전체 조회
+  getColum = async (columnId) => {
+    return await Card.findOne({ where: { columnId } });
+  };
+
+  // 카드 단일 조회
   findAllCard = async (cardId) => {
     return await Card.findOne({
       where: { cardId },
@@ -21,11 +25,6 @@ class CardRepository {
   // 카드 조회
   findCard = async (columnId, cardId) => {
     return await Card.findOne({ where: { columnId, cardId } });
-  };
-
-  // 카드 조회
-  findCardId = async ({ cardId }) => {
-    return await Card.findOne({ where: { cardId } });
   };
 
   //카드 생성
