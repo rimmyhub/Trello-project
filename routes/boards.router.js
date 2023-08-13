@@ -10,6 +10,9 @@ const boardsController = new BoardsController();
 // 보드 전체 조회
 boardRouter.get('/boards', boardsController.getAllBoard);
 
+// 보드 상세 조회
+boardRouter.get('/boards/:boardId', boardsController.getBoard);
+
 // 보드 생성
 boardRouter.post('/boards', auth.verifyAccessToken, boardsController.createBoard);
 
