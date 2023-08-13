@@ -8,12 +8,12 @@ const CardsController = require('../controllers/cards.controller');
 const cardsController = new CardsController();
 
 // 카드 전체 조회
-CardRouter.get('/cards/cards/:cardId', cardsController.getAllCard);
+CardRouter.get('/cards/:cardId', cardsController.getAllCard);
 
 // 카드 상세 조회
 CardRouter.get('/cards/:columnId/cards/:cardId', cardsController.getCard);
 
-// 카드 생성
+// 카드 작성
 CardRouter.post('/cards/:columnId', auth.verifyAccessToken, cardsController.createCard);
 
 // 카드 수정
