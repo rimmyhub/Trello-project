@@ -9,8 +9,10 @@ const authMiddleware = new AuthMiddleware();
 
 columnsRouter.post('/:boardId/column', authMiddleware.verifyAccessToken, columnsController.createColumn);
 columnsRouter.get('/:boardId/column/:columnId', authMiddleware.verifyAccessToken, columnsController.getColumnById);
-columnsRouter.get('/:boardId/column/', authMiddleware.verifyAccessToken, columnsController.getAllColumns);
+columnsRouter.get('/column', authMiddleware.verifyAccessToken, columnsController.getAllColumns);
 columnsRouter.put('/:boardId/column/:columnId', authMiddleware.verifyAccessToken, columnsController.updateColumn);
 columnsRouter.delete('/:boardId/column/:columnId', authMiddleware.verifyAccessToken, columnsController.deleteColumn);
+columnsRouter.get('/:boardId/column', authMiddleware.verifyAccessToken, columnsController.getAllColumnsForBoard);
+columnsRouter.put('/:boardId/column-order', authMiddleware.verifyAccessToken, columnsController.updateColumnOrder);
 
 module.exports = columnsRouter;
