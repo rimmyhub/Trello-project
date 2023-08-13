@@ -39,10 +39,10 @@ async function displayColumns() {
     animation: 150, // 드래그 애니메이션 지속시간 (밀리초),
     swapThreshold: 0.5, // 컬럼 스왑 임계값 설정
     onEnd: async (event) => {
-      const fromposition = event.oldIndex;
-      const toposition = event.newIndex;
+      const fromIndex = event.oldIndex;
+      const toIndex = event.newIndex;
 
-      // 서버에 컬럼 순서 업데이트 요청
+      // 서버에 실제 컬럼 순서 업데이트 요청
       try {
         const jwtToken = getJwtToken();
         const response = await fetch(`/api/${boardId}/column-order`, {
@@ -51,7 +51,7 @@ async function displayColumns() {
             'Authorization': `Bearer ${jwtToken}`,
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ columnOrder: { fromposition, toposition } })
+          body: JSON.stringify({ fromIndex, toIndex }) // 실제 position 값
         });
 
         if (!response.ok) {
@@ -64,8 +64,6 @@ async function displayColumns() {
   };
 
   // 컬럼 구역 전체에 드래그 앤 드롭 기능 추가
-  new Sortable(columnsContainer, sortableOptions);
-
   new Sortable(columnsContainer, sortableOptions);
 
   columns.forEach(column => {

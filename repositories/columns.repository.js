@@ -54,7 +54,6 @@ class ColumnRepository {
     async updateColumnOrder(boardId, columnOrder) {
         try {
             const { fromposition, toposition } = columnOrder;
-
             // 열 순서 업데이트 로직을 구현합니다.
             // fromposition과 toposition을 이용하여 열 순서를 변경합니다.
             // 이 예제에서는 단순히 열 순서를 서로 바꾸는 예시를 제시합니다.
@@ -65,7 +64,9 @@ class ColumnRepository {
             await Column.update({ order: fromposition }, { where: { columnId: toposition, boardId } });
 
 
+
         } catch (error) {
+            // 오류 발생 시 롤백합니다.
             console.error('Error updating column order:', error);
             throw new Error('컬럼 순서 업데이트 실패');
         }
