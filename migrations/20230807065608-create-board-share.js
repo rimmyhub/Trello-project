@@ -27,15 +27,6 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
-      invitedUser: {
-        allowNull: true,
-        type: Sequelize.INTEGER,
-      },
-      status: {
-        allowNull: false,
-        type: Sequelize.ENUM('standby', 'accept', 'cancel'),
-        defaultValue: 'standby',
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

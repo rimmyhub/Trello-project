@@ -19,4 +19,10 @@ boardRouter.put('/boards/:boardId', auth.verifyAccessToken, boardsController.upd
 // 보드 삭제
 boardRouter.delete('/boards/:boardId', auth.verifyAccessToken, boardsController.deleteBoard);
 
+// 보드 초대
+boardRouter.post('/boards/:boardId/share', auth.verifyAccessToken, boardsController.inviteBoard);
+
+// 보드 초대 조회
+boardRouter.get('/boards/:boardId', auth.verifyAccessToken, boardsController.inviteShareBoard);
+
 module.exports = boardRouter;

@@ -9,14 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      boardShareId: {
+      userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'BoardShares',
-          key: 'boardShareId',
+          model: 'Users',
+          key: 'userId',
         },
-        onDelete: 'CASCADE',
       },
       cardId: {
         allowNull: false,
@@ -26,15 +25,6 @@ module.exports = {
           key: 'cardId',
         },
         onDelete: 'CASCADE',
-      },
-      invitedUser: {
-        allowNull: true,
-        type: Sequelize.INTEGER,
-      },
-      status: {
-        allowNull: false,
-        type: Sequelize.ENUM('standby', 'accept', 'cancel'),
-        defaultValue: 'standby',
       },
       createdAt: {
         allowNull: false,

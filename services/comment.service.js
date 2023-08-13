@@ -3,6 +3,16 @@ const CommentsRepository = require('../repositories/comment.repository');
 class CommentsService {
   commentsRepository = new CommentsRepository();
 
+  // 댓글 전체 조회
+  findAllComment = async ({ cardId }) => {
+    try {
+      const comment = await this.commentsRepository.findAllComment({ cardId });
+      return { code: 200, data: comment };
+    } catch (error) {
+      return { code: 500, data: error.message };
+    }
+  };
+
   // 댓글 조회
   findComment = async ({ commentId }) => {
     try {

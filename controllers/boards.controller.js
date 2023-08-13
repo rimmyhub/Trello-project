@@ -84,19 +84,33 @@ class BoardsController {
     }
   };
 
-  // // 보드 초대
-  // inviteBoard = async (req, res, next) => {
-  //   try {
-  //     const { email } = req.body;
-  //     const { boardId } = req.params;
-  //     const { code, message } = await this.boardsService.inviteBoard({
-  //       email,
-  //       boardId,
-  //     });
-  //     return res.status(code).json({ message });
-  //   } catch (error) {
-  //     return this.handleError(res, error);
-  //   }
-  // };
+  // 보드 초대
+  inviteBoard = async (req, res, next) => {
+    console.log(req.body);
+    try {
+      const { name } = req.body;
+      const { boardId } = req.params;
+      const { code, message } = await this.boardsService.inviteBoard({
+        name,
+        boardId,
+      });
+      return res.status(code).json({ message });
+    } catch (error) {
+      return this.handleError(res, error);
+    }
+  };
+
+  // 보드 초대 조회
+  inviteShareBoard = async (req, res, next) => {
+    try {
+      const { boardId } = req.params;
+      const { code, message } = await this.boardsService.inviteShareBoard({
+        boardId,
+      });
+      return res.status(code).json({ message });
+    } catch (error) {
+      return this.handleError(res, error);
+    }
+  };
 }
 module.exports = BoardsController;

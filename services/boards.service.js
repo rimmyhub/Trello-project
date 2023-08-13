@@ -72,20 +72,36 @@ class BoardsService {
     }
   };
 
-  // inviteBoard = async ({ email, boardId }) => {
-  //   const invitedUser = await this.boardsRepository.findByEmail({ email });
+  inviteBoard = async ({ name, boardId }) => {
+    try {
+      const invitedUser = await this.boardsRepository.findName({ name });
+      console.log(invitedUser);
+      if (!invitedUser) {
+        return { code: 404, message: '초대할 유저가 존재하지 않습니다.' };
+      }
+      if (!boardId) {
+        return { code: 404, message: '보드가 존재하지 않습니다.' };
+      }
+      const userId = invitedUser.userId;
+      await this.boardsRepository.inviteBoard({ userId, boardId });
 
-  //   if (!invitedUser) {
-  //     throw { code: 400, message: '초대할 유저가 존재하지 않습니다.' };
-  //   }
-  //   if (!boardId) {
-  //     throw { code: 400, message: '보드가 존재하지 않습니다.' };
-  //   }
+      return { code: 201, message: '보드초대가 완료되었습니다.' };
+    } catch (error) {
+      console.log(error);
+      return { code: 500, message: '서버에러' };
+    }
+  };
 
-  //   const inviteData = await this.boardsRepository.createBoardUser(invitedUser.userId, boardId);
-
-  //   return inviteData;
-  // };
+  // 보드 초대 조회
+  inviteShareBoard = async ({ boardId }) => {
+    try {
+      const invitedShare = await this.boardsRepository.shareBoard({ boardId });
+      return { code: 200, message: invitedShare };
+    } catch (error) {
+      console.log(error);
+      throw { code: 400, message: '데이터 형식이 올바르지 않습니다.' };
+    }
+  };
 }
 
 module.exports = BoardsService;

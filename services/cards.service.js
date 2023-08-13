@@ -71,6 +71,27 @@ class CardService {
     await this.cardRepository.updateColumn({ columnId, userId, cardId });
     return { code: 200, message: '카드의 칼럼을 수정했습니다.' };
   };
+
+  // 카드 초대
+
+  inviteCard = async ({ cardId, name }) => {
+    console.log(name);
+    try {
+      const invitedUser = await this.cardRepository.findName({ name });
+      console.log(invitedUser);
+      console.log(cardId);
+      if (!invitedUser) {
+        return { code: 404, message: '초대할 유저가 존재하지 않습니다.' };
+      }
+      const userId = invitedUser.userId;
+      await this.cardRepository.inviteCard({ userId, cardId: +cardId });
+
+      return { code: 201, message: '카드초대가 완료되었습니다.' };
+    } catch (error) {
+      console.log(error);
+      return { code: 500, message: '서버에러' };
+    }
+  };
 }
 
 module.exports = CardService;

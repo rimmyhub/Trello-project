@@ -103,6 +103,22 @@ class CardController {
       res.status(500).send('에러 발생');
     }
   };
+
+  // 보드 초대
+  inviteCard = async (req, res, next) => {
+    console.log(req.body);
+    try {
+      const { name } = req.body;
+      const { cardId } = req.params;
+      const { code, message } = await this.cardService.inviteCard({
+        name,
+        cardId,
+      });
+      return res.status(code).json({ message });
+    } catch (error) {
+      return this.handleError(res, error);
+    }
+  };
 }
 
 module.exports = CardController;
