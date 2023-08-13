@@ -1,6 +1,5 @@
-const { Board, User } = require('../models');
+const { Board, User, BoardShare } = require('../models');
 const { Op, Sequelize } = require('sequelize');
-const BoardShare = require('../models');
 class BoardsRepository {
   findAllBoard = async () => {
     return await Board.findAll();
@@ -35,13 +34,26 @@ class BoardsRepository {
     });
   };
 
-  // // 보드 초대
-  // findByEmail = async (email) => {
-  //   return await User.findOne({ where: { email } });
-  // };
+  // 보드 초대
+  findName = async ({ name }) => {
+    return await User.findOne({ where: { name } });
+  };
 
-  // createBoardShare = async (userId, boardId) => {
-  //   return await BoardShare.create({ userId, boardId });
-  // };
+  inviteBoard = async ({ userId, boardId }) => {
+    return await BoardShare.create({ userId, boardId });
+  };
+
+  // 보드 초대 조회
+  shareBoard = async ({ boardId }) => {
+    console.log(boardId);
+    return await BoardShare.findAll({
+      where: { boardId: +boardId },
+      include: [
+        {
+          model: User,
+        },
+      ],
+    });
+  };
 }
 module.exports = BoardsRepository;

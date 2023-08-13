@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.BoardShare, {
-        sourceKey: 'boardShareId',
-        foreignKey: 'boardShareId',
+      this.belongsTo(models.User, {
+        sourceKey: 'userId',
+        foreignKey: 'userId',
       });
       this.belongsTo(models.Card, {
         sourceKey: 'cardId',
@@ -27,12 +27,12 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      boardShareId: {
+      userId: {
         allowNull: false,
         type: DataTypes.INTEGER,
         references: {
-          model: 'BoardShare',
-          key: 'boardShareId',
+          model: 'User',
+          key: 'userId',
         },
       },
       cardId: {
@@ -42,15 +42,6 @@ module.exports = (sequelize, DataTypes) => {
           model: 'Card',
           key: 'cardId',
         },
-      },
-      invitedUser: {
-        allowNull: true,
-        type: DataTypes.INTEGER,
-      },
-      status: {
-        allowNull: false,
-        type: DataTypes.ENUM('standby', 'accept', 'cancel'),
-        defaultValue: 'standby',
       },
       createdAt: {
         allowNull: false,

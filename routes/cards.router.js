@@ -20,11 +20,10 @@ CardRouter.post('/cards/:columnId', auth.verifyAccessToken, cardsController.crea
 CardRouter.put('/cards/:cardId', auth.verifyAccessToken, cardsController.updateCard);
 
 // 카드 삭제
-CardRouter.delete(
-  '/cards/:columnId/cards/:cardId',
-  auth.verifyAccessToken,
-  cardsController.deleteCard,
-);
+CardRouter.delete('/cards/:cardId', auth.verifyAccessToken, cardsController.deleteCard);
+
+// 카드 공유
+CardRouter.post('/cards/:cardId/share', auth.verifyAccessToken, cardsController.inviteCard);
 
 // 칼럼 아이디 수정
 // 팀원들에게 여쭤보기
@@ -33,7 +32,5 @@ CardRouter.patch(
   auth.verifyAccessToken,
   cardsController.columnIdModify,
 );
-
-// 순서 바꾸고 디비 저장하는 법
 
 module.exports = CardRouter;

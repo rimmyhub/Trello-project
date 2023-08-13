@@ -7,6 +7,9 @@ const auth = new AuthMiddleware();
 const CommentsController = require('../controllers/comment.controller');
 const commentsController = new CommentsController();
 
+// 댓글 전체 조회
+commentsRouter.get('/comment/:cardId', commentsController.findAllComment);
+
 // 댓글 조회
 commentsRouter.get('/comments/:commentId', commentsController.findCardComment);
 
@@ -22,7 +25,7 @@ commentsRouter.put(
 
 //댓글 삭제
 commentsRouter.delete(
-  '/:cardId/comments/:commentId',
+  '/comments/:commentId',
   auth.verifyAccessToken,
   commentsController.deleteComment,
 );

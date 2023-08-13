@@ -1,7 +1,8 @@
-//페이지 로드 시 fetch 요청 보내고 데이터 처리
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     const response = await fetch('/api/boards');
+    const data = await response.json();
+    console.log(data);
   } catch (error) {
     console.error('Error fetching data:', error);
   }

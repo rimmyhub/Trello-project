@@ -1,9 +1,21 @@
-const { Card } = require('../models');
+const { Card, CardShare, User, Column, Board } = require('../models');
 
 class CardRepository {
   // 카드 전체 조회
   findAllCard = async (cardId) => {
-    return await Card.findOne({ where: { cardId } });
+    return await Card.findOne({
+      where: { cardId },
+      include: [
+        {
+          model: Column,
+          include: [
+            {
+              model: Board,
+            },
+          ],
+        },
+      ],
+    });
   };
 
   // 카드 조회
@@ -37,6 +49,16 @@ class CardRepository {
   // 카드 수정
   updateColumn = async ({ columnId, userId, cardId }) => {
     return await Card.update({ columnId }, { where: { userId, cardId } });
+  };
+
+  // 유저 이름
+  findName = async ({ name }) => {
+    return await User.findOne({ where: { name } });
+  };
+
+  // 카드 초대
+  inviteCard = async ({ cardId, userId }) => {
+    return await CardShare.create({ userId, cardId });
   };
 }
 

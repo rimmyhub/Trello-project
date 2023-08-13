@@ -1,7 +1,19 @@
-const { Comment } = require('../models');
+const { Comment, User } = require('../models');
 const { Op } = require('sequelize');
 
 class CommentsRepository {
+  // 댓글 전체 조회
+  findAllComment = async ({ cardId }) => {
+    return await Comment.findAll({
+      where: { cardId },
+      include: [
+        {
+          model: User,
+        },
+      ],
+    });
+  };
+
   //댓글 조회
   findComment = async ({ commentId }) => {
     return await Comment.findOne({
