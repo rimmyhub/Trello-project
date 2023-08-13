@@ -31,7 +31,7 @@ class UsersRepository {
         name,
         introduction,
       },
-      { where: { userId } }
+      { where: { userId } },
     );
     return modifiedUserData;
   };
@@ -58,6 +58,11 @@ class UsersRepository {
   createRefreshToken = async (refreshToken, userId) => {
     const createdRefreshToken = await RefreshToken.create({ refreshToken, userId });
     return createdRefreshToken;
+  };
+
+  // 회원정보 불러오기
+  getUserById = async (userId) => {
+    return await User.findByPk(userId);
   };
 }
 

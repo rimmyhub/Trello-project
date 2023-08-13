@@ -9,7 +9,7 @@ class BoardsService {
   findAllBoard = async () => {
     try {
       const data = await this.boardsRepository.findAllBoard();
-      return { code: 200, message: data };
+      return { code: 200, data };
     } catch (err) {
       throw { code: 500, message: '예기치 못한 에러가 발생했습니다.' };
     }
