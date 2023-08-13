@@ -1,5 +1,6 @@
 const ColumnService = require('../services/columns.service');
 const AuthMiddleware = require('../middleware/auth.middleware.js');
+const { validationResult, body } = require('express-validator');
 
 class ColumnsController {
   constructor() {
@@ -12,7 +13,8 @@ class ColumnsController {
     const columnData = {
       ...req.body,
       userId: res.locals.user.userId,
-      boardId: boardId
+      boardId: boardId,
+      position: await this.columnService.getNextColumnPosition(boardId) // 새로운 position 값 가져오기
     };
 
     try {
@@ -33,6 +35,7 @@ class ColumnsController {
         res.status(404).json({ message: '컬럼이 존재하지 않습니다.' });
       }
     } catch (error) {
+      console.error('Error retrieving columns:', error);
       res.status(500).json({ error: '컬럼 조회 실패' });
     }
   };
@@ -80,6 +83,45 @@ class ColumnsController {
       res.status(500).json({ error: '컬럼 삭제 실패' });
     }
   };
+  getAllColumnsForBoard = async (req, res) => {
+    const { boardId } = req.params;
+
+    try {
+      const columns = await this.columnService.getAllColumnsForBoard(boardId);
+      res.status(200).json(columns);
+    } catch (error) {
+      console.error('Error retrieving columns:', error);
+      res.status(500).json({ error: '보드에 속한 컬럼 조회 실패' });
+    }
+  };
+
+  // 컬럼 순서 업데이트
+  updateColumnOrder = async (req, res) => {
+    const { boardId } = req.params;
+    const { columnOrder } = req.body;
+
+    try {
+      console.log(req.body);
+      console.log(columnOrder);
+      await this.columnService.updateColumnOrder(boardId, columnOrder);
+      res.status(200).json({ message: '컬럼 순서 업데이트 성공' });
+    } catch (error) {
+      console.error('Error updating column order:', error);
+      res.status(500).json({ error: '컬럼 순서 업데이트 실패' });
+    }
+  };
+
+  getColumnCurrentPosition = async (req, res) => {
+    const { columnId } = req.params;
+
+    try {
+      const currentPosition = await columnService.getColumnCurrentPosition(columnId);
+      res.status(200).json({ currentPosition });
+    } catch (error) {
+      console.error('Error fetching column position:', error);
+      res.status(500).json({ error: '컬럼 위치 조회 실패' });
+    }
+  }
 }
 
 module.exports = ColumnsController;
