@@ -111,17 +111,7 @@ class ColumnsController {
     }
   };
 
-  getColumnCurrentPosition = async (req, res) => {
-    const { columnId } = req.params;
-
-    try {
-      const currentPosition = await columnService.getColumnCurrentPosition(columnId);
-      res.status(200).json({ currentPosition });
-    } catch (error) {
-      console.error('Error fetching column position:', error);
-      res.status(500).json({ error: '컬럼 위치 조회 실패' });
-    }
-  }
 }
+
 
 module.exports = ColumnsController;

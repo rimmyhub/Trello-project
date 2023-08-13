@@ -66,7 +66,7 @@ async function displayColumns() {
   // 컬럼 구역 전체에 드래그 앤 드롭 기능 추가
   new Sortable(columnsContainer, sortableOptions);
 
-  columns.forEach(column => {
+  columns.forEach(async column => {
     const columnSection = document.createElement('section');
     columnSection.classList.add('column-section');
 
@@ -132,6 +132,48 @@ async function displayColumns() {
       deleteColumn(column.columnId);
     });
 
+    // "카드 생성" 버튼 생성
+    const createCardButton = document.createElement('button');
+    createCardButton.textContent = '카드 생성';
+    columnTitleWrapper.appendChild(createCardButton);
+
+    // "카드 생성" 버튼의 이벤트 리스너
+    createCardButton.addEventListener('click', async () => {
+      const cardInfo = promptCardInfo(); // 카드 정보를 입력받는 함수 호출
+      if (cardInfo) {
+        const { cardName, cardColor, cardDescription, cardStartDate, cardDueDate } = cardInfo;
+        createCard(column.columnId, cardName, cardColor, cardDescription, cardStartDate, cardDueDate);
+      }
+    });
+
+    // 카드 정보를 입력받는 함수
+    function promptCardInfo() {
+      const cardName = prompt('새 카드의 이름을 입력하세요:');
+      if (!cardName) return null;
+
+      const cardColor = prompt('카드의 색상을 선택하세요 (red, blue, yellow, green 중 선택):');
+      if (!['red', 'blue', 'yellow', 'green'].includes(cardColor)) return null;
+
+      const cardDescription = prompt('카드의 설명을 입력하세요:');
+      const cardStartDate = prompt('카드의 시작 날짜를 입력하세요 (YYYY-MM-DD 형식):');
+      const cardDueDate = prompt('카드의 마감 날짜를 입력하세요 (YYYY-MM-DD 형식):');
+
+      return { cardName, cardColor, cardDescription, cardStartDate, cardDueDate };
+    }
+
+    // 컬럼에 대한 카드를 가져와 표시
+    const response = await fetchCardsForColumn(column.columnId);
+    const cards = response.cards; // 객체 내의 cards 배열 추출
+    if (Array.isArray(cards)) {
+      cards.forEach(card => {
+        // 컬럼 섹션 내에 카드 요소 생성 및 표시
+        const cardElement = document.createElement('div');
+        cardElement.classList.add('card');
+        cardElement.textContent = card.name;
+        columnTitleWrapper.appendChild(cardElement);
+      });
+    }
+
     columnSection.appendChild(columnTitleWrapper);
     columnsContainer.appendChild(columnSection);
 
@@ -140,6 +182,59 @@ async function displayColumns() {
       swapThreshold: 0.5,
     });
   });
+}
+
+// 카드 생성 함수 수정
+async function createCard(columnId, cardName, cardColor, cardDescription, cardStartDate, cardDueDate) {
+  try {
+    const jwtToken = getJwtToken();
+    const response = await fetch(`/api/${columnId}/cards`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: cardName,
+        color: cardColor,
+        description: cardDescription,
+        startDate: cardStartDate,
+        dueDate: cardDueDate
+      }) // 카드 정보 데이터
+    });
+
+    if (response.ok) {
+      displayColumns(); // 카드 생성 후 컬럼 갱신
+    } else {
+      console.error('Error creating card:', error);
+      throw new Error('카드 생성 실패');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function fetchCardsForColumn(columnId) {
+  try {
+    const jwtToken = getJwtToken();
+    const response = await fetch(`/api/${columnId}/cards`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${jwtToken}`
+      }
+    });
+
+    if (response.ok) {
+      const cards = await response.json();
+      return cards; // 배열로 데이터 반환
+    } else {
+      console.error('Error fetching cards:', error);
+      return []; // 빈 배열 반환
+    }
+  } catch (error) {
+    console.error(error);
+    return []; // 빈 배열 반환
+  }
 }
 
 async function updateColumn(columnId, newName) {
@@ -225,81 +320,6 @@ createColumnForm.addEventListener('submit', async (event) => {
   }
 });
 
-async function displayColumn(column) {
-  const columnsContainer = document.getElementById('columns-container');
-  const columnSection = document.createElement('section');
-  columnSection.classList.add('column-section');
-
-  const columnTitleWrapper = document.createElement('div');
-  columnTitleWrapper.classList.add('column-title-wrapper');
-
-  const columnTitle = document.createElement('h2');
-  columnTitle.textContent = column.name;
-  columnTitleWrapper.appendChild(columnTitle);
-
-  const columnElement = document.createElement('div');
-  columnElement.classList.add('column');
-  columnElement.textContent = column.name;
-  columnTitleWrapper.appendChild(columnElement);
-
-  const editButton = document.createElement('button');
-  editButton.textContent = 'Edit Column';
-  columnTitleWrapper.appendChild(editButton);
-
-  const editForm = document.createElement('form');
-  const editInput = document.createElement('input');
-  const saveButton = document.createElement('button');
-  const cancelButton = document.createElement('button');
-
-  editForm.style.display = 'none';
-
-  editInput.type = 'text';
-  editInput.placeholder = 'Enter new column name';
-  saveButton.textContent = 'Save';
-  cancelButton.textContent = 'Cancel';
-
-  editForm.appendChild(editInput);
-  editForm.appendChild(saveButton);
-  editForm.appendChild(cancelButton);
-  columnTitleWrapper.appendChild(editForm);
-
-  editButton.addEventListener('click', () => {
-    columnTitle.style.display = 'none';
-    editForm.style.display = 'block';
-    editInput.value = column.name;
-  });
-
-  saveButton.addEventListener('click', () => {
-    const newName = editInput.value.trim();
-    if (newName) {
-      updateColumn(column.columnId, newName);
-      columnTitle.textContent = newName;
-      columnTitle.style.display = 'block';
-      editForm.style.display = 'none';
-    }
-  });
-
-  cancelButton.addEventListener('click', () => {
-    columnTitle.style.display = 'block';
-    editForm.style.display = 'none';
-  });
-
-  const deleteButton = document.createElement('button');
-  deleteButton.textContent = 'Delete Column';
-  columnTitleWrapper.appendChild(deleteButton);
-
-  deleteButton.addEventListener('click', () => {
-    deleteColumn(column.columnId);
-  });
-
-  columnSection.appendChild(columnTitleWrapper);
-  columnsContainer.appendChild(columnSection);
-
-  new Sortable(columnTitleWrapper, {
-    animation: 150,
-    swapThreshold: 0.5,
-  });
-}
 
 
 
