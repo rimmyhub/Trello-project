@@ -14,7 +14,7 @@ const getData = async () => {
   try {
     const response = await fetch(`/api/cards/${cardId}`);
     const { findCard } = await response.json();
-    console.log(findCard);
+    // console.log(findCard);
     const boardId = findCard.Column.Board.boardId;
     const { name, description, startDate, dueDate, color } = findCard;
     taskName.innerText = name; // 작업 이름
@@ -25,7 +25,7 @@ const getData = async () => {
 
     const inviteRes = await fetch(`/api/boards/${boardId}`);
     const { message } = await inviteRes.json();
-    // console.log(message);
+    console.log(message);
     const temp = message
       .map((data) => {
         return `

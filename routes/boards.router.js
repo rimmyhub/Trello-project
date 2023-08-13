@@ -11,7 +11,7 @@ const boardsController = new BoardsController();
 boardRouter.get('/boards', boardsController.getAllBoard);
 
 // 보드 상세 조회
-boardRouter.get('/boards/:boardId', boardsController.getBoard);
+boardRouter.get('/board/:boardId', boardsController.getBoard);
 
 // 보드 생성
 boardRouter.post('/boards', auth.verifyAccessToken, boardsController.createBoard);

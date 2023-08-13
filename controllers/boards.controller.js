@@ -35,6 +35,7 @@ class BoardsController {
       return this.handleError(res, error);
     }
   };
+
   // 보드 생성
   createBoard = async (req, res, next) => {
     try {

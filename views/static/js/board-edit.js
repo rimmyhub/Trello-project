@@ -12,7 +12,7 @@ let colorData;
 // 데이터 가져오기
 const getData = async () => {
   try {
-    const response = await fetch(`/api/boards/${boardId}`);
+    const response = await fetch(`/api/board/${boardId}`);
     const { data } = await response.json();
     console.log(data);
     const { name, description, color } = data;
