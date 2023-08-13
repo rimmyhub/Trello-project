@@ -3,15 +3,15 @@ const CardService = require('../services/cards.service');
 class CardController {
   cardService = new CardService();
 
-  getColumCard = async (req, res) => {
-    try {
-      const { columnId } = req.params;
-      const findCard = await this.cardService.getColum(columnId);
-      res.status(200).json({ findCard });
-    } catch (err) {
-      console.error(err.name, ':', err.message);
-    }
-  };
+  // getColumCard = async (req, res) => {
+  //   try {
+  //     const { columnId } = req.params;
+  //     const findCard = await this.cardService.getColum(columnId);
+  //     res.status(200).json({ findCard });
+  //   } catch (err) {
+  //     console.error(err.name, ':', err.message);
+  //   }
+  // };
 
   // 카드 단일 조회
   getAllCard = async (req, res) => {

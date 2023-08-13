@@ -36,10 +36,9 @@ const getData = async () => {
 
     selectUser.innerHTML = temp;
     selectValue = message[0].User.name;
-    console.log(selectValue);
+    // console.log(selectValue);
     const selectChange = () => {
       selectValue = selectUser.options[selectUser.selectedIndex].value;
-      // console.log(selectValue);
     };
     selectUser.addEventListener('change', selectChange);
   } catch (error) {
@@ -59,9 +58,9 @@ inviteBut.addEventListener('click', async (e) => {
       }),
     });
     const data = await response.json();
-    // console.log(data);
+    console.log(data);
     if (data) {
-      // window.location.href = `/card/${cardId}`;
+      alert('초대가 되었습니다.');
     }
   } catch (error) {
     console.log(error);
@@ -75,7 +74,7 @@ const getComment = async () => {
     const response = await fetch(`/api/comment/${cardId}`);
 
     const { data } = await response.json();
-    console.log(data);
+    // console.log(data);
     const temp = data
       .map((data) => {
         return `

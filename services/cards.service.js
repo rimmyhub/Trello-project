@@ -3,10 +3,10 @@ const CardRepository = require('../repositories/cards.repository');
 class CardService {
   cardRepository = new CardRepository();
 
-  getColum = async (columId) => {
-    const findCard = await this.cardRepository.getColum(columId);
-    return findCard;
-  };
+  // getColum = async (columId) => {
+  //   const findCard = await this.cardRepository.getColum(columId);
+  //   return findCard;
+  // };
 
   // 카드 단일 조회
   findAllCard = async (cardId) => {

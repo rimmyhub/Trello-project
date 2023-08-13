@@ -8,7 +8,7 @@ const CardsController = require('../controllers/cards.controller');
 const cardsController = new CardsController();
 
 // 칼럼 으로 조회
-CardRouter.get('/cards/:columId', cardsController.getColumCard);
+// CardRouter.get('/cards/:columId', cardsController.getColumCard);
 
 // 카드 단일 조회
 CardRouter.get('/cards/:cardId', cardsController.getAllCard);
