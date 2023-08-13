@@ -1,5 +1,5 @@
 const UsersRepository = require('../repositories/users.repository');
-
+const { User } = require('../models');
 class UsersService {
   usersRepository = new UsersRepository();
 
@@ -39,6 +39,17 @@ class UsersService {
     }
     // 리프레쉬 토큰 생성
     const createRefreshToken = await this.usersRepository.createRefreshToken(refreshToken, userId);
+  };
+
+  // 사용자 정보 메인에 불러오기
+  getUserById = async (userId) => {
+    try {
+      console.log(userId);
+
+      return await this.usersRepository.getUserById(userId);
+    } catch (error) {
+      throw error;
+    }
   };
 }
 

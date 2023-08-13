@@ -34,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: 'userId',
         foreignKey: 'userId',
       });
+      this.hasMany(models.CardShare, {
+        sourceKey: 'userId',
+        foreignKey: 'userId',
+      });
     }
   }
   User.init(

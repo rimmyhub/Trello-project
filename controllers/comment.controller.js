@@ -3,11 +3,19 @@ const CommentsService = require('../services/comment.service');
 class CommentsController {
   commentsService = new CommentsService();
 
-  // 댓글 조회
-  findCardComment = async (req, res) => {
+  // 댓글 전체 조회
+  findAllComment = async (req, res) => {
     const { cardId } = req.params;
 
-    const { code, data } = await this.commentsService.findComment({ cardId });
+    const { code, data } = await this.commentsService.findAllComment({ cardId });
+    res.status(code).json({ data });
+  };
+
+  // 댓글 조회
+  findCardComment = async (req, res) => {
+    const { commentId } = req.params;
+
+    const { code, data } = await this.commentsService.findComment({ commentId });
     res.status(code).json({ data });
   };
 

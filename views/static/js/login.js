@@ -12,9 +12,11 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
       },
       body: JSON.stringify({ email, password }),
     });
-
+    const data = await response.json();
+    console.log(data);
     if (response.ok) {
-      window.location.href = '/main';
+      // window.location.href = `/main`;
+      window.location.href = `/main?userId=${data.data}`;
     } else {
       const loginFailedModal = new bootstrap.Modal(document.getElementById('loginFailedModal'));
       loginFailedModal.show();

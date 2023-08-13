@@ -4,8 +4,8 @@ class CardService {
   cardRepository = new CardRepository();
 
   //
-  findAllCard = async (columnId) => {
-    const findCard = await this.cardRepository.findAllCard(columnId);
+  findAllCard = async (cardId) => {
+    const findCard = await this.cardRepository.findAllCard(cardId);
     return findCard;
   };
 
@@ -30,16 +30,7 @@ class CardService {
   };
 
   // 카드 수정
-  updateCard = async ({
-    columnId,
-    userId,
-    cardId,
-    name,
-    color,
-    description,
-    startDate,
-    dueDate,
-  }) => {
+  updateCard = async ({ userId, cardId, name, color, description, startDate, dueDate }) => {
     const findCard = await this.cardRepository.findCardId({ cardId });
     if (!findCard) throw { code: 400, message: '카드를 찾을 수 없습니다.' };
 
@@ -47,7 +38,6 @@ class CardService {
     if (userId !== findCardUserId) throw { code: 400, message: '카드 작성자가 아닙니다.' };
 
     await this.cardRepository.updateOne({
-      columnId,
       userId,
       cardId,
       name,
@@ -80,6 +70,27 @@ class CardService {
 
     await this.cardRepository.updateColumn({ columnId, userId, cardId });
     return { code: 200, message: '카드의 칼럼을 수정했습니다.' };
+  };
+
+  // 카드 초대
+
+  inviteCard = async ({ cardId, name }) => {
+    console.log(name);
+    try {
+      const invitedUser = await this.cardRepository.findName({ name });
+      console.log(invitedUser);
+      console.log(cardId);
+      if (!invitedUser) {
+        return { code: 404, message: '초대할 유저가 존재하지 않습니다.' };
+      }
+      const userId = invitedUser.userId;
+      await this.cardRepository.inviteCard({ userId, cardId: +cardId });
+
+      return { code: 201, message: '카드초대가 완료되었습니다.' };
+    } catch (error) {
+      console.log(error);
+      return { code: 500, message: '서버에러' };
+    }
   };
 }
 

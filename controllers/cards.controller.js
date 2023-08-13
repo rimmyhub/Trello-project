@@ -6,8 +6,8 @@ class CardController {
   // 전체 카드 조회
   getAllCard = async (req, res) => {
     try {
-      const { columnId } = req.params;
-      const findCard = await this.cardService.findAllCard(columnId);
+      const { cardId } = req.params;
+      const findCard = await this.cardService.findAllCard(cardId);
       res.status(200).json({ findCard });
     } catch (err) {
       console.error(err.name, ':', err.message);
@@ -54,11 +54,10 @@ class CardController {
   // 카드 수정
   updateCard = async (req, res) => {
     try {
-      const { columnId, cardId } = req.params;
+      const { cardId } = req.params;
       const { name, color, description, startDate, dueDate } = req.body;
       const { userId } = res.locals.user;
       const { code, message } = await this.cardService.updateCard({
-        columnId,
         cardId,
         userId,
         name,
@@ -102,6 +101,22 @@ class CardController {
       if (err.code) return res.status(err.code).json({ message: err.message });
       console.error(err);
       res.status(500).send('에러 발생');
+    }
+  };
+
+  // 보드 초대
+  inviteCard = async (req, res, next) => {
+    console.log(req.body);
+    try {
+      const { name } = req.body;
+      const { cardId } = req.params;
+      const { code, message } = await this.cardService.inviteCard({
+        name,
+        cardId,
+      });
+      return res.status(code).json({ message });
+    } catch (error) {
+      return this.handleError(res, error);
     }
   };
 }

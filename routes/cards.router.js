@@ -7,20 +7,23 @@ const auth = new AuthMiddleware();
 const CardsController = require('../controllers/cards.controller');
 const cardsController = new CardsController();
 
-// 칼럼 - > 카드 전체 조회
-CardRouter.get('/:columnId/cards', cardsController.getAllCard);
+// 카드 전체 조회
+CardRouter.get('/cards/:cardId', cardsController.getAllCard);
 
 // 카드 상세 조회
-CardRouter.get('/:columnId/cards/:cardId', cardsController.getCard);
+CardRouter.get('/cards/:columnId/cards/:cardId', cardsController.getCard);
 
-// 카드 생성
-CardRouter.post('/:columnId/cards', auth.verifyAccessToken, cardsController.createCard);
+// 카드 작성
+CardRouter.post('/cards/:columnId', auth.verifyAccessToken, cardsController.createCard);
 
 // 카드 수정
-CardRouter.put('/:columnId/cards/:cardId', auth.verifyAccessToken, cardsController.updateCard);
+CardRouter.put('/cards/:cardId', auth.verifyAccessToken, cardsController.updateCard);
 
 // 카드 삭제
-CardRouter.delete('/:columnId/cards/:cardId', auth.verifyAccessToken, cardsController.deleteCard);
+CardRouter.delete('/cards/:cardId', auth.verifyAccessToken, cardsController.deleteCard);
+
+// 카드 공유
+CardRouter.post('/cards/:cardId/share', auth.verifyAccessToken, cardsController.inviteCard);
 
 // 칼럼 아이디 수정
 // 팀원들에게 여쭤보기
@@ -29,7 +32,5 @@ CardRouter.patch(
   auth.verifyAccessToken,
   cardsController.columnIdModify,
 );
-
-// 순서 바꾸고 디비 저장하는 법
 
 module.exports = CardRouter;

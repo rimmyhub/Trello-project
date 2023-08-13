@@ -19,4 +19,7 @@ UserRouter.put('/users', auth.verifyAccessToken, usersController.modifyUser);
 //회원 탈퇴
 UserRouter.delete('/leave', auth.verifyAccessToken, usersController.deleteUser);
 
+//사용자 정보 불러오기 (main페이지)
+UserRouter.get('/users/:userId', auth.verifyAccessToken, usersController.getBoardUserInfo);
+
 module.exports = UserRouter;

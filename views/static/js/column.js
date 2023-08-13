@@ -1,4 +1,4 @@
-const boardId = window.location.pathname.split('/')[1];
+const boardId = window.location.pathname.split('/')[2];
 
 console.log(boardId);
 
@@ -13,8 +13,8 @@ async function fetchColumns() {
     const response = await fetch(`/api/${boardId}/column`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${jwtToken}`
-      }
+        Authorization: `Bearer ${jwtToken}`,
+      },
     });
 
     if (!response.ok) {
@@ -48,10 +48,10 @@ async function displayColumns() {
         const response = await fetch(`/api/${boardId}/column-order`, {
           method: 'PUT',
           headers: {
-            'Authorization': `Bearer ${jwtToken}`,
-            'Content-Type': 'application/json'
+            Authorization: `Bearer ${jwtToken}`,
+            'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ fromIndex, toIndex }) // 실제 position 값
+          body: JSON.stringify({ fromIndex, toIndex }), // 실제 position 값
         });
 
         if (!response.ok) {
@@ -60,7 +60,7 @@ async function displayColumns() {
       } catch (error) {
         console.error(error);
       }
-    }
+    },
   };
 
   // 컬럼 구역 전체에 드래그 앤 드롭 기능 추가
@@ -243,10 +243,10 @@ async function updateColumn(columnId, newName) {
     const response = await fetch(`/api/${boardId}/column/${columnId}`, {
       method: 'PUT',
       headers: {
-        'Authorization': `Bearer ${jwtToken}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name: newName })
+      body: JSON.stringify({ name: newName }),
     });
 
     if (!response.ok) {
@@ -265,9 +265,9 @@ async function deleteColumn(columnId) {
     const response = await fetch(`/api/${boardId}/column/${columnId}`, {
       method: 'DELETE',
       headers: {
-        'Authorization': `Bearer ${jwtToken}`,
-        'Content-Type': 'application/json'
-      }
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json',
+      },
     });
 
     if (!response.ok) {
@@ -294,10 +294,10 @@ createColumnForm.addEventListener('submit', async (event) => {
       const response = await fetch(`/api/${boardId}/column`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${jwtToken}`,
-          'Content-Type': 'application/json'
+          Authorization: `Bearer ${jwtToken}`,
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: columnName }) // 컬럼 이름 전송
+        body: JSON.stringify({ name: columnName }), // 컬럼 이름 전송
       });
 
       if (response.ok) {
